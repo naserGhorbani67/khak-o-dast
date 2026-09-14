@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>همه محصولات — خاک و دست</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lalezar&family=Vazirmatn:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/products.css" />
+  </head>
+  <body>
+    <header class="nav">
+      <div class="overlay" id="overlay"></div>
+
+      <div class="nav-inner">
+        <a href="index.html#top" class="nav-logo">
+          <svg class="mark" viewBox="0 0 40 40" fill="none">
+            <path
+              d="M12 14 Q12 8 20 8 Q28 8 28 14 L27 30 Q26 34 20 34 Q14 34 13 30 Z"
+              fill="#B24A2B"
+            />
+            <ellipse cx="20" cy="14" rx="8" ry="3" fill="#8E3A21" />
+          </svg>
+          خاک و دست
+        </a>
+        <nav class="nav-links">
+          <a href="index.html#top">خانه</a>
+          <a href="index.html#about">درباره من</a>
+          <a href="products.html">محصولات</a>
+          <a href="index.html#contact">تماس با من</a>
+        </nav>
+        <a href="index.html#contact" class="nav-cta">سفارش محصول</a>
+        <button class="nav-toggle" aria-label="باز کردن منو" id="navToggle">
+          <span></span>
+        </button>
+      </div>
+    </header>
+
+    <main>
+      <!-- PAGE HEADER -->
+      <section class="page-header wrap">
+        <div class="breadcrumb">
+          <a href="index.html#top">خانه</a> / محصولات
+        </div>
+        <h1 class="page-title">همه محصولات کارگاه</h1>
+        <p class="page-sub">
+          مجموعه کامل کوزه، گلدان، مجسمه و ظروف سفالی — همه دست‌ساز، همه محدود و
+          یکتا.
+        </p>
+      </section>
+
+      <!-- FILTER + PRODUCTS -->
+      <section class="wrap" style="padding-top: 0; border-top: none">
+        <div class="filter-bar">
+          <div class="chip-group">
+            <button class="chip active" data-category="همه">همه</button>
+            <button class="chip" data-category="کوزه">کوزه</button>
+            <button class="chip" data-category="گلدان">گلدان</button>
+            <button class="chip" data-category="مجسمه">مجسمه</button>
+            <button class="chip" data-category="ظروف">ظروف</button>
+          </div>
+          <div class="search-box">
+            <input type="text" id="searchInput" placeholder="جستجوی محصول..." />
+            <svg viewBox="0 0 24 24" fill="none">
+              <circle
+                cx="11"
+                cy="11"
+                r="7"
+                stroke="currentColor"
+                stroke-width="2"
+              />
+              <path
+                d="m20 20-3.5-3.5"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+              />
+            </svg>
+          </div>
+        </div>
+
+        <div class="results-meta" id="resultsMeta"></div>
+
+        <div class="product-grid" id="productGrid"></div>
+
+        <div class="empty-state" id="emptyState">
+          <div class="t">محصولی پیدا نشد</div>
+          <div>دسته یا عبارت جستجوی دیگری را امتحان کنید.</div>
+        </div>
+
+        <div class="pagination" id="pagination"></div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="wrap">
+        © ۱۴۰۵ خاک و دست. تمامی آثار به‌صورت دستی ساخته می‌شوند.
+      </div>
+    </footer>
+
+    <script src="js/products.js"></script>
+    <script src="js/app.js"></script>
+  </body>
+</html>

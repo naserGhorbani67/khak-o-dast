@@ -1,5 +1,5 @@
 :root {
-  color-scheme: light;
+  color-scheme: light only;
   --sand: #ebdfc7; /* بدنه خاک رس نپخته */
   --sand-light: #f6efde;
   --clay: #b24a2b; /* سرخ خاک پخته */
@@ -20,6 +20,7 @@
 }
 html {
   scroll-behavior: smooth;
+  color-scheme: light only;
 }
 body {
   margin: 0;

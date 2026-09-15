@@ -696,6 +696,9 @@ footer {
   .materials {
     flex-direction: column;
   }
+  .hero {
+    margin-top: 6.5rem;
+  }
 }
 @media (prefers-reduced-motion: reduce) {
   * {

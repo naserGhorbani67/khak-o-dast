@@ -32,7 +32,8 @@ overlayElem.addEventListener("click", closeMenu);
 //input control-----
 const showWarningName = () => {
   const name = inputName.value.trim();
-  if (name.length < 3 || !isNaN(name)) {
+  const nameRegex = /^[a-zA-Z\u0600-\u06FF\s]{3,}$/;
+  if (!nameRegex.test(name)) {
     warningName.classList.remove("hidden");
   } else {
     warningName.classList.add("hidden");
@@ -40,6 +41,7 @@ const showWarningName = () => {
 };
 const showWarningEmail = () => {
   const email = inputEmail.value.trim();
+
   if (!email.includes("@") || !email.includes(".")) {
     warningEmail.classList.remove("hidden");
   } else {

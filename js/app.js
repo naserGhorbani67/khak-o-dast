@@ -30,9 +30,11 @@ overlayElem.addEventListener("click", closeMenu);
 //   : "position:fixed; top:64px; right:20px; left:20px; background:#FBF6EC; flex-direction:column; padding:20px; border:1px solid var(--line); border-radius:10px; gap:18px; z-index:99;";
 
 //input control-----
+const nameRegex = /^[a-zA-Z\u0600-\u06FF\s]{3,}$/;
+const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(com|org|ir|info)$/;
+
 const showWarningName = () => {
   const name = inputName.value.trim();
-  const nameRegex = /^[a-zA-Z\u0600-\u06FF\s]{3,}$/;
   if (!nameRegex.test(name)) {
     warningName.classList.remove("hidden");
   } else {
@@ -41,7 +43,6 @@ const showWarningName = () => {
 };
 const showWarningEmail = () => {
   const email = inputEmail.value.trim();
-  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(com|org|ir|info)$/;
   if (!emailRegex.test(email)) {
     warningEmail.classList.remove("hidden");
   } else {
@@ -62,17 +63,13 @@ const submitMessage = (event) => {
   const message = textEreaMessage.value.trim();
 
   event.preventDefault();
-  if (
-    name.length >= 3 &&
-    isNaN(name) &&
-    email.includes("@") &&
-    email.includes(".") &&
-    message.length !== 0
-  ) {
+  if (nameRegex.test(name) && emailRegex.test(email) && message.length !== 0) {
     inputName.value = "";
     inputEmail.value = "";
     textEreaMessage.value = "";
     //send message (بعدا باید تکمیل شود)
+  } else {
+    alert("wrong");
   }
 };
 

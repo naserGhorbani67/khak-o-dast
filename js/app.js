@@ -41,8 +41,8 @@ const showWarningName = () => {
 };
 const showWarningEmail = () => {
   const email = inputEmail.value.trim();
-
-  if (!email.includes("@") || !email.includes(".")) {
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(com|org|ir|info)$/;
+  if (!emailRegex.test(email)) {
     warningEmail.classList.remove("hidden");
   } else {
     warningEmail.classList.add("hidden");

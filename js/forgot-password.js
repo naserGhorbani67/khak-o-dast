@@ -55,6 +55,9 @@ const handleForgotPassword = async (event) => {
     if (error.message.includes("Unable to validate email address")) {
       modalText.innerText = " آدرس ایمیل نامعتبر است ";
     }
+    if (error.message.includes("email rate limit exceeded")) {
+      modalText.innerText = "محدودیت سرویس ایمیل لطفا بعدا تلاش کنید";
+    }
 
     if (error.message.includes("Failed to fetch")) {
       // خطای شبکه

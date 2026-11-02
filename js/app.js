@@ -58,6 +58,7 @@ const handleLogout = async () => {
   confirmLogoutBtn.innerHTML = "در حال خروج ...";
   confirmLogoutBtn.disabled = true;
   confirmLogoutBtn.classList.add("disable");
+  cancelLogoutBtn.classList.add("disable");
 
   await new Promise((resolve) => setTimeout(resolve, 2000));
   let isSuccess = false;
@@ -79,6 +80,7 @@ const handleLogout = async () => {
       confirmLogoutBtn.innerHTML = " تلاش مجدد";
       confirmLogoutBtn.disabled = false;
       confirmLogoutBtn.classList.remove("disable");
+      cancelLogoutBtn.classList.remove("disable");
     }
   }
 };

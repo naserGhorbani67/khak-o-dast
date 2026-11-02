@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ثبت نام - خاک و دست</title>
+    <link rel="icon" type="image/svg+xml" href="./imges/favicon.svg" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <link rel="stylesheet" href="./css/webfont.css" />
+    <link rel="stylesheet" href="./css/style.css" />
+    <link rel="stylesheet" href="./css/auth.css" />
+  </head>
+  <body class="auth-body">
+    <div class="breadcrumb-container">
+      <a href="index.html" class="back-home"> خانه </a>
+      <span class="breadcrumb"> / فرم ثبت نام </span>
+    </div>
+    <main class="auth-container">
+      <div class="auth-card">
+        <div class="auth-header">
+          <div class="auth-logo">
+            <img
+              src="./imges/logo-khak-o-dast.webp"
+              alt="لوگوی سایت خاک و دست"
+            />
+          </div>
+          <h2>ایجاد حساب کاربری</h2>
+          <p>به کارگاه سفالگری خاک و دست خوش آمدید</p>
+        </div>
+        <form id="signup-form" class="auth-form">
+          <!-- username feild -->
+          <div class="form-group">
+            <label for="full-name">نام و نام خانوادگی</label>
+            <div class="input-wrapper">
+              <input
+                type="text"
+                id="full-name"
+                class="auth-input"
+                placeholder="مثلا: کوروش تهرانی"
+                required
+              />
+            </div>
+            <p class="error-message error-name hidden">
+              نام باید حداقل 3 کاراکتر داشته باشد
+            </p>
+          </div>
+          <!-- email field -->
+          <div class="form-group">
+            <label for="email">ایمیل</label>
+            <div class="input-wrapper">
+              <input
+                type="email"
+                id="email"
+                class="auth-input"
+                placeholder="kuroshtehrani@gmail.com"
+                required
+              />
+            </div>
+            <p class="error-message error-email hidden" id="email-error">
+              ایمیل باید به صورت صحیح نوشته شود
+            </p>
+          </div>
+          <!-- فیلد رمز عبور -->
+          <div class="form-group">
+            <label for="password">رمز عبور</label>
+            <div class="input-wrapper">
+              <input
+                type="password"
+                id="password"
+                class="auth-input"
+                placeholder="••••••••"
+                required
+              />
+              <i class="fa-solid fa-eye eye-icon-password" id="eye-icon"></i>
+            </div>
+            <p class="error-message error-password hidden" id="password-error">
+              رمز عبور باید حداقل ۸ کاراکتر شامل حروف بزرگ و کوچک، عدد و علامت
+              باشد.
+            </p>
+          </div>
+
+          <!-- فیلد تکرار رمز عبور -->
+          <div class="form-group">
+            <label for="confirmPassword">تکرار رمز عبور</label>
+            <div class="input-wrapper">
+              <input
+                type="password"
+                id="confirmPassword"
+                class="auth-input"
+                placeholder="••••••••"
+                required
+              />
+              <i class="fa-solid fa-eye eye-icon-confirm" id="eye-icon"></i>
+            </div>
+            <p class="error-message error-confirm hidden" id="confirm-error">
+              رمز عبور و تکرار آن یکسان نیستند.
+            </p>
+          </div>
+
+          <!-- دکمه ثبت نام -->
+          <button type="submit" class="auth-btn" id="submitBtn">ثبت‌نام</button>
+        </form>
+
+        <!-- لینک به صفحه ورود -->
+        <div class="auth-footer">
+          <p>قبلاً حساب کاربری دارید؟ <a href="login.html">وارد شوید</a></p>
+        </div>
+      </div>
+    </main>
+    <!-- ================= MODAL ================= -->
+    <div class="modal-screen hidden" id="modalScreen">
+      <div class="modal-content">
+        <!-- آیکون موفقیت/خطا -->
+        <img src="./imges/success.png" alt="status" id="iconModalScreen" />
+
+        <!-- متن پیغام -->
+        <p class="modal-text" id="ModalText"></p>
+
+        <!-- دکمه تایید -->
+        <button class="modal-btn" id="modalButton">تایید</button>
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script type="module" src="./js/signup.js"></script>
+  </body>
+</html>

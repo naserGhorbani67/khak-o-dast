@@ -1,0 +1,359 @@
+body {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+  padding: 1.5rem;
+  box-sizing: border-box;
+}
+.breadcrumb-container {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+}
+.back-home {
+  color: var(--clay);
+  font-weight: 700;
+  text-decoration: none;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  font-weight: 600;
+  transition: color 0.4s ease;
+  z-index: 10;
+}
+.breadcrumb {
+  font-weight: 700;
+  top: 1.9rem;
+  right: 3.5rem;
+  font-size: 0.9rem;
+  padding-right: 0.5rem;
+  color: var(--ink-soft);
+}
+
+/* --- کانتینر اصلی و کارت --- */
+.auth-container {
+  width: 100%;
+  max-width: 450px; /* پهنای کارت رو محدود می‌کنه */
+}
+
+.auth-card {
+  background-color: #fff; /* سفید برای تضاد با پس‌زمینه کرم */
+  padding: 40px 30px;
+  border-radius: 20px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08); /* سایه نرم */
+  border: 1px solid var(--line); /* حاشیه کم‌رنگ */
+}
+
+/* --- بخش بالای کارت (لوگو و عنوان) --- */
+.auth-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.auth-logo {
+  width: 100%;
+  max-width: 350px;
+  /* height: 60px; */
+  margin: 0 auto 15px auto;
+}
+
+.auth-logo img {
+  width: clamp(120px, 50%, 220px);
+  margin: 0 auto;
+  height: auto;
+  display: block;
+}
+
+.auth-header h2 {
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  margin-bottom: 8px;
+}
+
+.auth-header p {
+  font-family: var(--font-display);
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+}
+
+/* --- فرم و فیلدها --- */
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px; /* فاصله بین فیلدها */
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-group label {
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: var(--ink);
+}
+
+/* --- پوشش اینپوت (برای آیکون چشم) --- */
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.auth-input {
+  width: 100%;
+  padding: 12px 16px;
+  font-family: inherit;
+  font-size: 1rem;
+  color: var(--ink);
+  background-color: var(--sand-light); /* پس‌زمینه کرم روشن */
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+/* استایل وقتی کاربر روی اینپوت کلیک می‌کنه */
+.auth-input:focus {
+  outline: none;
+  border-color: var(--clay);
+  background-color: #fff;
+  box-shadow: 0 0 0 3px rgba(178, 74, 43, 0.1); /* هاله سرخ‌گلی */
+}
+
+/* استایل جایگزین (Placeholder) */
+.auth-input::placeholder {
+  color: var(--ink-soft);
+  opacity: 0.6;
+}
+
+/* --- آیکون چشم پسورد --- */
+.eye-icon-password,
+.eye-icon-confirm {
+  position: absolute;
+  left: 15px;
+  color: var(--ink-soft);
+  cursor: pointer;
+  transition: color 0.3s;
+  z-index: 100;
+}
+
+.eye-icon-password:hover,
+.eye-icon-confirm:hover {
+  color: var(--clay);
+}
+
+/* فاصله متن داخل اینپوت از آیکون چشم */
+#password {
+  padding-left: 40px;
+}
+
+/* --- پیغام‌های خطا --- */
+.error-message {
+  color: #d32f2f; /* قرمز */
+  font-size: 0.8rem;
+  margin-top: 4px;
+}
+
+.hidden {
+  display: none !important;
+}
+/* forget password */
+.login-option {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.forgot-password-link {
+  color: var(--clay);
+  font-size: 0.8rem;
+}
+.login-option a:hover {
+  color: var(--ink);
+}
+/* --- دکمه ثبت‌نام --- */
+.auth-btn {
+  margin-top: 10px;
+  padding: 14px;
+  background-color: var(--clay); /* رنگ سرخ پخته */
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition:
+    background-color 0.3s ease,
+    transform 0.2s ease;
+}
+
+.auth-btn:hover {
+  background-color: var(--clay-dark);
+  transform: translateY(-2px); /* افکت بالا رفتن */
+}
+
+.auth-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* --- لینک پایین کارت (ورود) --- */
+.auth-footer {
+  text-align: center;
+  margin-top: 25px;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+}
+
+.auth-footer p {
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+}
+
+.auth-footer a {
+  color: var(--clay);
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s;
+}
+
+.auth-footer a:hover {
+  color: var(--clay-dark);
+  text-decoration: underline;
+}
+
+/* --- ریسپانسیو برای لینک‌های بالای فرم --- */
+@media (max-width: 880px) {
+  .breadcrumb-container {
+    position: static;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 1.5rem;
+  }
+  body {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+}
+/* --- ریسپانسیو (موبایل) --- */
+
+@media (max-width: 480px) {
+  .auth-card {
+    padding: 30px 20px;
+  }
+
+  .back-home {
+    top: 15px;
+    right: 15px;
+    font-size: 0.85rem;
+  }
+  .login-option {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .forgot-password-link {
+    margin-top: 0.8rem;
+  }
+}
+/* =========================================
+   استایل‌های مودال (Modal)
+   ========================================= */
+
+/* پس‌زمینه تیره و بلور شده (Overlay) */
+.modal-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(44, 34, 26, 0.4); /* رنگ ink با شفافیت */
+  backdrop-filter: blur(5px); /* افکت بلور */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* بالاتر از همه چیز */
+  transition: opacity 0.3s ease;
+}
+
+/* مخفی کردن مودال */
+.modal-screen.hidden {
+  display: none !important; /* یا opacity: 0; visibility: hidden; */
+}
+
+/* کارت سفید مودال */
+.modal-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: var(--paper);
+  padding: 30px 40px;
+  border-radius: 20px;
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  max-width: 400px;
+  width: 90%;
+  border: 1px solid var(--line);
+  transform: translateY(0);
+  animation: slideUp 0.4s ease forwards;
+}
+
+/* انیمیشن آمدن مودال */
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* آیکون مودال */
+#iconModalScreen {
+  width: 60px;
+  height: 60px;
+  margin-bottom: 20px;
+  object-fit: contain;
+}
+
+/* متن مودال */
+.modal-text {
+  font-family: var(--font-body);
+  font-size: 1.1rem;
+  color: var(--ink);
+  margin-bottom: 25px;
+  line-height: 1.6;
+}
+
+/* دکمه تایید */
+.modal-btn {
+  background-color: var(--clay);
+  color: #fff;
+  border: none;
+  padding: 12px 30px;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.modal-btn:hover {
+  background-color: var(--clay-dark);
+}

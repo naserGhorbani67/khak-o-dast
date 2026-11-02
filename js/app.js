@@ -1,3 +1,5 @@
+import { clientSupabase } from "./auth.js";
+
 const navToggle = document.getElementById("navToggle");
 const navLinks = document.querySelector(".nav-links");
 const overlayElem = document.querySelector("#overlay");
@@ -8,7 +10,78 @@ const inputName = document.querySelector(".contact-form-name");
 const inputEmail = document.querySelector(".contact-form-email");
 const textEreaMessage = document.querySelector(".contact-form-message");
 const formBtn = document.querySelector("form button");
+// loged or not-loged user
+const guestView = document.querySelector("#guest-view");
+const userView = document.querySelector("#user-view");
+const userNameDisplay = document.querySelector("#user-name-display");
+const userNavContainer = document.querySelector(".user-nav-container");
 
+// logout modal and logout btn
+const logoutBtn = document.querySelector("#logout-btn");
+const logoutModal = document.querySelector("#logoutModal");
+const confirmLogoutBtn = document.querySelector("#confirmLogoutBtn");
+const cancelLogoutBtn = document.querySelector("#cancelLogoutBtn");
+const messageErrorModalLogout = document.querySelector(".modal-content p");
+
+const checkUserAuthStatus = async () => {
+  try {
+    if (!navigator.onLine) {
+      throw new Error("آفلاین");
+    }
+    const {
+      data: { user },
+    } = await clientSupabase.auth.getUser();
+    if (user) {
+      // user is loged
+      guestView.style.display = "none";
+      userView.style.display = "flex";
+      const fullName = user.user_metadata?.full_name || "; کاربر عزیز";
+      userNameDisplay.innerText = fullName;
+    } else {
+      // user is guest
+      guestView.style.display = "flex";
+      userView.style.display = "none";
+    }
+    userNavContainer.style.visibility = "visible";
+  } catch (error) {
+    alert("لطفا وضعیت اینترنت و شبکه خود را بررسی کنید");
+    console.error("خطا در بررسی وضعیت کاربر", error);
+    guestView.style.display = "flex";
+    userView.style.display = "none";
+    userNavContainer.style.visibility = "visible";
+  }
+};
+const handleLogout = async () => {
+  const messageErrorModalLogout = document.querySelector(".modal-content p");
+  messageErrorModalLogout.innerHTML = "";
+
+  confirmLogoutBtn.innerHTML = "در حال خروج ...";
+  confirmLogoutBtn.disabled = true;
+  confirmLogoutBtn.classList.add("disable");
+
+  await new Promise((resolve) => setTimeout(resolve, 2000));
+  let isSuccess = false;
+  try {
+    const { error } = await clientSupabase.auth.signOut();
+    if (error) throw error;
+    isSuccess = true;
+  } catch (error) {
+    console.error("خطا در خروج از حساب", error);
+    messageErrorModalLogout.style.color = "#b24a2b";
+    messageErrorModalLogout.innerHTML =
+      "مشکلی در خروج از حساب پیش آمد لطفا دوباره تلاش کنید";
+  } finally {
+    if (isSuccess) {
+      setTimeout(() => {
+        window.location.href = "index.html";
+      }, 2000);
+    } else {
+      confirmLogoutBtn.innerHTML = " تلاش مجدد";
+      confirmLogoutBtn.disabled = false;
+      confirmLogoutBtn.classList.remove("disable");
+    }
+  }
+};
 // منوی موبایل
 const menuHandler = () => {
   navLinks.classList.toggle("open");
@@ -22,12 +95,6 @@ const closeMenu = () => {
 };
 navToggle.addEventListener("click", menuHandler);
 overlayElem.addEventListener("click", closeMenu);
-
-// const open = navLinks.style.display === "flex";
-// navLinks.style.display = open ? "none" : "flex";
-// navLinks.style.cssText += open
-//   ? ""
-//   : "position:fixed; top:64px; right:20px; left:20px; background:#FBF6EC; flex-direction:column; padding:20px; border:1px solid var(--line); border-radius:10px; gap:18px; z-index:99;";
 
 //input control-----
 const nameRegex = /^[a-zA-Z\u0600-\u06FF\s]{3,}$/;
@@ -73,7 +140,27 @@ const submitMessage = (event) => {
   }
 };
 
-inputName.addEventListener("keyup", showWarningName);
-inputEmail.addEventListener("keyup", showWarningEmail);
-textEreaMessage.addEventListener("keyup", showWarningMessage);
-formBtn.addEventListener("click", submitMessage);
+inputName?.addEventListener("keyup", showWarningName);
+inputEmail?.addEventListener("keyup", showWarningEmail);
+textEreaMessage?.addEventListener("keyup", showWarningMessage);
+formBtn?.addEventListener("click", submitMessage);
+// login and logout user
+document.addEventListener("DOMContentLoaded", () => {
+  checkUserAuthStatus();
+
+  if (logoutBtn && logoutModal) {
+    logoutBtn.addEventListener("click", () => {
+      messageErrorModalLogout.innerHTML =
+        "آیا مطمئن هستید که می‌خواهید از حساب کاربری خود خارج شوید؟";
+      messageErrorModalLogout.style.color = "#6b5a48";
+      logoutModal.classList.remove("hidden");
+      confirmLogoutBtn.innerHTML = " بله، خارج شو ";
+    });
+    cancelLogoutBtn.addEventListener("click", () => {
+      logoutModal.classList.add("hidden");
+    });
+    confirmLogoutBtn.addEventListener("click", () => {
+      handleLogout();
+    });
+  }
+});

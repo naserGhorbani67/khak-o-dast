@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ورود</title>
+    <link rel="icon" type="image/svg+xml" href="./imges/favicon.svg" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <link rel="stylesheet" href="./css/webfont.css" />
+    <link rel="stylesheet" href="./css/style.css" />
+    <link rel="stylesheet" href="./css/auth.css" />
+  </head>
+  <body>
+
+      <body class="auth-body">
+        <!-- لینک بازگشت به خانه -->
+        <div class="breadcrumb-container">
+          <a href="index.html" class="back-home"> خانه </a>
+          <span class="breadcrumb"> / فرم ورود </span>
+        </div>
+
+        <main class="auth-container">
+          <div class="auth-card">
+            <!-- لوگو و عنوان -->
+            <div class="auth-header">
+              <div class="auth-logo">
+            <img
+              src="./imges/logo-khak-o-dast.webp"
+              alt="لوگوی سایت خاک و دست"
+            />
+              </div>
+              <h2>ورود به حساب</h2>
+              <p>خوشحالم که دوباره میبینمتون!</p>
+            </div>
+
+            <!-- فرم ورود -->
+            <form id="login-form" class="auth-form">
+              <!-- فیلد ایمیل -->
+              <div class="form-group">
+                <label for="email">ایمیل</label>
+                <div class="input-wrapper">
+                  <input
+                    type="email"
+                    id="email"
+                    class="auth-input"
+                    placeholder="example@email.com"
+                    required
+                  />
+                </div>
+                <p class="error-message error-email hidden" id="email-error">
+                  ایمیل باید به صورت صحیح نوشته شود
+                </p>
+              </div>
+
+              <!-- فیلد رمز عبور -->
+              <div class="form-group">
+                <label for="password">رمز عبور</label>
+                <div class="input-wrapper">
+                  <input
+                    type="password"
+                    id="password"
+                    class="auth-input"
+                    placeholder="••••••••"
+                    required
+                  />
+                  <i class="fa-solid fa-eye eye-icon-password" id="eye-icon"></i>
+                </div>
+                <p
+                  class="error-message error-password hidden"
+                  id="password-error"
+                >
+                  رمز عبور باید حداقل ۸ کاراکتر شامل حروف بزرگ و کوچک، عدد و
+                  علامت باشد.
+                </p>
+              </div>
+
+              <!-- چک‌باکس مرا به خاطر بسپار -->
+            <div class="login-option">
+                
+              <div class="remember-me">
+                <input type="checkbox" id="rememberMe" />
+                <label for="rememberMe">مرا به خاطر بسپار</label>
+              </div>
+              <a href="forgot-password.html" class="forgot-password-link">رمز عبور را فراموش کردم</a>                
+
+            </div>
+
+              <!-- دکمه ورود -->
+              <button type="submit" class="auth-btn" id="loginBtn">ورود</button>
+            </form>
+
+            <!-- لینک به صفحه ثبت‌نام -->
+            <div class="auth-footer">
+              <p>حساب کاربری ندارید؟ <a href="signup.html">ثبت‌نام کنید</a></p>
+            </div>
+          </div>
+        </main>
+    <!-- ================= MODAL ================= -->
+    <div class="modal-screen hidden" id="modalScreen">
+      <div class="modal-content">
+        <!-- آیکون موفقیت/خطا -->
+        <img src="./imges/success.png" alt="status" id="iconModalScreen" />
+
+        <!-- متن پیغام -->
+        <p class="modal-text" id="ModalText"></p>
+
+        <!-- دکمه تایید -->
+        <button class="modal-btn" id="modalButton">تایید</button>
+      </div>
+    </div>
+        <!-- لینک به فایل جاوااسکریپت مخصوص لاگین (به صورت ماژولار) -->
+        <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+        <script type="module" src="js/login.js"></script>
+      </body>
+    </html>
+  </body>
+</html>

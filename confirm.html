@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>تایید حساب | خاک و دست</title>
+    <link rel="icon" type="image/svg+xml" href="./imges/favicon.svg" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <link rel="stylesheet" href="./css/webfont.css" />
+    <link rel="stylesheet" href="./css/style.css" />
+    <link rel="stylesheet" href="./css/auth.css" />
+
+    <style>
+      /* تنظیمات اختصاصی این صفحه */
+      .confirm-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        /* رنگ پس‌زمینه ملایم که با استایل سایت هماهنگ است */
+        background-color: #fcfaf8;
+        padding: 20px;
+      }
+
+      .confirm-card {
+        background: #ffffff;
+        padding: 50px 40px;
+        border-radius: 16px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        text-align: center;
+        max-width: 450px;
+        width: 100%;
+        border-top: 4px solid #8b2b2b; /* رنگ برند شما */
+        animation: slideUp 0.5s ease-out forwards;
+      }
+
+      /* آیکون تیک */
+      .confirm-icon {
+        font-size: 50px;
+        color: #28a745;
+        margin-bottom: 20px;
+        background: #e8f5e9;
+        width: 90px;
+        height: 90px;
+        line-height: 90px;
+        border-radius: 50%;
+        margin: 0 auto 25px auto;
+      }
+
+      .confirm-title {
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: #333;
+        margin-bottom: 15px;
+      }
+
+      .confirm-text {
+        color: #666;
+        font-size: 1rem;
+        line-height: 1.8;
+        margin-bottom: 35px;
+      }
+
+      .btn-confirm-login {
+        display: inline-block;
+        background-color: #8b2b2b;
+        color: #ffffff;
+        padding: 14px 30px;
+        text-decoration: none;
+        border-radius: 10px;
+        font-weight: bold;
+        width: 100%;
+        box-sizing: border-box;
+        transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
+      }
+
+      .btn-confirm-login:hover {
+        background-color: #6a1a1a;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(139, 43, 43, 0.3);
+      }
+
+      @keyframes slideUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    </style>
+  </head>
+
+  <!-- کلاس auth-body را از خود سایت شما استفاده کردیم تا رنگ پس‌زمینه یکسان باشد -->
+  <body class="auth-body">
+    <div class="confirm-container">
+      <div class="confirm-card">
+        <!-- استفاده از آیکون فونت‌آوسام که در سایت دارید -->
+        <div class="confirm-icon">
+          <i class="fa-solid fa-check"></i>
+        </div>
+
+        <h1 class="confirm-title">حساب شما تایید شد</h1>
+
+        <p class="confirm-text">
+          ایمیل شما با موفقیت تایید شد.<br />
+          حالا می‌توانید وارد حساب کاربری خود شوید.
+        </p>
+
+        <a href="login.html" class="btn-confirm-login">ورود به حساب کاربری</a>
+      </div>
+    </div>
+  </body>
+</html>

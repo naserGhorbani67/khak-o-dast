@@ -1,0 +1,6 @@
+@import url("https://fonts.googleapis.com/css2?family=Lalezar&family=Vazirmatn:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap");
+:root {
+  --font-body: "Vazirmatn", sans-serif;
+  --font-display: "Lalezar", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+}

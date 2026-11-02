@@ -1,0 +1,140 @@
+body {
+  background-color: var(--paper);
+  color: var(--ink);
+  font-family: inherit;
+  min-height: 100vh;
+}
+
+.profile-container {
+  max-width: 1000px;
+  margin: 50px auto;
+  padding: 0 20px;
+}
+
+/* --- بخش هدر پروفایل --- */
+.profile-header {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  background: var(--sand-light);
+  padding: 30px;
+  border-radius: 16px;
+  border: 1px solid var(--line);
+  margin-bottom: 40px;
+  box-shadow: 0 4px 15px rgba(44, 34, 26, 0.05); /* سایه ملایم با رنگ ink */
+}
+
+.avatar-large {
+  width: 100px;
+  height: 100px;
+  background-color: var(--sand);
+  color: var(--clay);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 40px;
+  border: 3px solid var(--clay);
+}
+
+.profile-info h1 {
+  margin: 0 0 10px 0;
+  color: var(--clay-dark);
+  font-size: 24px;
+}
+
+.profile-info p {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 15px;
+}
+
+/* --- شبکه کارت‌ها --- */
+.profile-grid {
+  border-top: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 25px;
+}
+
+/* --- استایل هر کارت --- */
+.profile-card {
+  background: var(--paper);
+  border-radius: 16px;
+  border: 1px solid var(--line);
+  overflow: hidden;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.profile-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(44, 34, 26, 0.08);
+}
+
+.card-header {
+  background-color: var(--sand);
+  padding: 15px 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid var(--line);
+}
+
+.card-header i {
+  color: var(--clay);
+  font-size: 20px;
+}
+
+.card-header h2 {
+  margin: 0;
+  font-size: 16px;
+  color: var(--ink);
+}
+
+.card-body {
+  padding: 20px;
+}
+
+.card-body p {
+  margin: 0 0 15px 0;
+  color: var(--ink-soft);
+  font-size: 14px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.card-body p strong {
+  color: var(--ink);
+}
+
+.card-body p span {
+  color: var(--clay-dark);
+  font-weight: bold;
+}
+
+/* استایل برای کارت‌های خالی (مثل سفارش‌ها) */
+.empty-state {
+  text-align: center;
+  padding: 40px 20px !important;
+  color: var(--ink-soft) !important;
+}
+
+.empty-state i {
+  font-size: 40px;
+  color: var(--line);
+  margin-bottom: 15px;
+}
+
+.empty-state p {
+  justify-content: center !important;
+}
+
+/* --- ریسپانسیو برای موبایل --- */
+@media (max-width: 768px) {
+  .profile-header {
+    flex-direction: column;
+    text-align: center;
+  }
+}

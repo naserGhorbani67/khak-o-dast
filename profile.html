@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light" />
+    <title>خاک و دست — سفالگری دستی</title>
+    <link rel="icon" type="image/svg+xml" href="./imges/favicon.svg" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <link rel="stylesheet" href="./css/profile.css" />
+    <link rel="stylesheet" href="./css/webfont.css" />
+    <link rel="stylesheet" href="./css/style.css" />
+  </head>
+  <body>
+    <header class="nav">
+      <div class="overlay" id="overlay"></div>
+      <div class="nav-inner">
+        <a href="index.html#top" class="nav-logo" aria-label="خاک و دست">
+          <span class="logo-words">
+            <span class="khak">خاک</span>
+            <svg
+              class="mark"
+              viewBox="0 0 24 34"
+              fill="none"
+              aria-hidden="true"
+            >
+              <path
+                d="M9 4 C9 8 4 10.5 4 18.5 C4 26.5 8 31.5 12 31.5 C16 31.5 20 26.5 20 18.5 C20 10.5 15 8 15 4 Z"
+                fill="#B24A2B"
+              />
+              <ellipse cx="12" cy="4" rx="3.3" ry="1.3" fill="#8E3A21" />
+              <path
+                d="M6 17 Q12 19.5 18 17"
+                stroke="#E8A98C"
+                stroke-width="1.1"
+                stroke-linecap="round"
+              />
+              <path
+                d="M5.6 22 Q12 24.8 18.4 22"
+                stroke="#E8A98C"
+                stroke-width="1.1"
+                stroke-linecap="round"
+              />
+            </svg>
+            <span class="dast">دست</span>
+          </span>
+          <svg
+            class="swash"
+            viewBox="0 0 200 14"
+            preserveAspectRatio="none"
+            fill="none"
+            aria-hidden="true"
+          >
+            <path
+              d="M2 4 Q50 0 100 4 T198 4"
+              stroke="#B24A2B"
+              stroke-width="2.2"
+              stroke-linecap="round"
+              vector-effect="non-scaling-stroke"
+            />
+            <path
+              d="M22 8 Q70 4 110 8 T178 8"
+              stroke="#B24A2B"
+              stroke-width="1.6"
+              stroke-linecap="round"
+              opacity=".7"
+              vector-effect="non-scaling-stroke"
+            />
+            <path
+              d="M48 12 Q85 9 120 12 T152 12"
+              stroke="#B24A2B"
+              stroke-width="1.2"
+              stroke-linecap="round"
+              opacity=".45"
+              vector-effect="non-scaling-stroke"
+            />
+          </svg>
+        </a>
+        <nav class="nav-links">
+          <a href="index.html#top">خانه</a>
+          <a href="index.html#about">درباره من</a>
+          <a href="products.html">محصولات</a>
+          <a href="index.html#contact">تماس با من</a>
+          <a href="index.html#contact" class="mobile-order-btn">سفارش محصول</a>
+        </nav>
+        <div class="nav-actions">
+          <!-- دکمه سفارش محصول -->
+          <a href="#contact" class="nav-cta">سفارش محصول</a>
+
+          <!-- بخش کاربری -->
+          <div class="user-nav-container">
+            <!-- حالت ۱: مهمان (ورود / ثبت نام) -->
+            <div id="guest-view" class="guest-links">
+              <a href="./login.html" class="nav-auth-link">ورود</a>
+              <span class="divider">|</span>
+              <a href="./signup.html" class="nav-auth-link">ثبت نام</a>
+            </div>
+
+            <!-- حالت ۲: کاربر لاگین شده (پروفایل و خروج) -->
+            <div id="user-view" class="user-logged-in">
+              <a href="profile.html" class="profile-dropdown">
+                <i class="fa-regular fa-user"></i>
+                <span id="user-name-display">نام کاربر</span>
+              </a>
+              <button id="logout-btn" title="خروج">
+                <i class="fa-solid fa-arrow-right-from-bracket"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- دکمه منوی همبرگری -->
+          <button class="nav-toggle" aria-label="باز کردن منو" id="navToggle">
+            <span></span>
+          </button>
+        </div>
+      </div>
+    </header>
+    <main class="profile-container">
+      <!-- بخش خوش‌آمدگویی و آواتار -->
+      <section class="profile-header">
+        <div class="avatar-large">
+          <i class="fa-regular fa-user"></i>
+        </div>
+        <div class="profile-info">
+          <!-- آیدی‌های زیر با جاوااسکریپت پر می‌شوند -->
+          <h1 id="profile-display-name">در حال بارگذاری...</h1>
+          <p id="profile-display-email">...</p>
+        </div>
+      </section>
+
+      <!-- بخش کارت‌های اطلاعات -->
+      <section class="profile-grid">
+        <!-- کارت اطلاعات حساب -->
+        <div class="profile-card">
+          <div class="card-header">
+            <i class="fa-solid fa-id-card"></i>
+            <h2>اطلاعات حساب</h2>
+          </div>
+          <div class="card-body">
+            <p>
+              <strong>نام و نام خانوادگی:</strong> <span id="card-name">-</span>
+            </p>
+            <p><strong>ایمیل:</strong> <span id="card-email">-</span></p>
+            <p>
+              <strong>شماره تماس:</strong> <span id="card-phone">ثبت نشده</span>
+            </p>
+          </div>
+        </div>
+
+        <!-- کارت سفارش‌ها -->
+        <div class="profile-card">
+          <div class="card-header">
+            <i class="fa-solid fa-box-open"></i>
+            <h2>سفارش‌های من</h2>
+          </div>
+          <div class="card-body empty-state">
+            <i class="fa-solid fa-box"></i>
+            <p>شما هنوز هیچ سفارشی ثبت نکرده‌اید.</p>
+          </div>
+        </div>
+
+        <!-- کارت آدرس‌ها -->
+        <div class="profile-card">
+          <div class="card-header">
+            <i class="fa-solid fa-location-dot"></i>
+            <h2>آدرس‌های من</h2>
+          </div>
+          <div class="card-body empty-state">
+            <p>هیچ آدرسی ثبت نشده است.</p>
+          </div>
+        </div>
+      </section>
+    </main>
+    <!--   logout modal -->
+    <div id="logoutModal" class="modal-overlay hidden">
+      <div class="modal-content">
+        <div class="modal-icon warning-icon">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i>
+        </div>
+        <h2>خروج از حساب</h2>
+        <p>آیا مطمئن هستید که می‌خواهید از حساب کاربری خود خارج شوید؟</p>
+        <div class="modal-actions">
+          <button id="confirmLogoutBtn" class="btn-confirm-logout">
+            بله، خارج شو
+          </button>
+          <button id="cancelLogoutBtn" class="btn-cancel-logout">انصراف</button>
+        </div>
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script type="module" src="./js/app.js"></script>
+    <script type="module" src="./js/profile.js"></script>
+  </body>
+</html>

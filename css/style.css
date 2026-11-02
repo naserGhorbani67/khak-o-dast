@@ -26,7 +26,7 @@ body {
   margin: 0;
   background: var(--sand);
   color: var(--ink);
-  font-family: "Vazirmatn", sans-serif;
+  font-family: var(--font-body);
   line-height: 1.7;
   -webkit-font-smoothing: antialiased;
   background-image: radial-gradient(
@@ -64,11 +64,11 @@ img {
 }
 
 .display {
-  font-family: "Lalezar", sans-serif;
+  font-family: var(--font-display);
   font-weight: 400;
 }
 .mono {
-  font-family: "JetBrains Mono", monospace;
+  font-family: var(--font-mono);
   letter-spacing: 0.02em;
 }
 
@@ -96,6 +96,11 @@ img {
   opacity: 1;
   visibility: visible;
 }
+.disable {
+  opacity: 0.3;
+  pointer-events: note !important;
+  cursor: not-allowed !important;
+}
 header.nav {
   position: fixed;
   inset-inline: 0;
@@ -115,17 +120,56 @@ header.nav {
   justify-content: space-between;
 }
 .nav-logo {
-  font-family: "Lalezar", sans-serif;
-  font-size: 1.5rem;
-  color: var(--clay-dark);
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.06em;
+  font-family: "Lalezar", var(--font-display), sans-serif;
+  font-size: 1.9rem; /* اندازه کل لوگو؛ همه چیز با em مقیاس می‌گیرد */
+  line-height: 1.1;
+  color: var(--clay-dark, #2b1d16);
+  text-decoration: none;
+}
+
+.nav-logo .logo-words {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 0.14em;
 }
+
+.nav-logo .khak {
+  color: var(--clay-dark, #2b1d16);
+}
+.nav-logo .dast {
+  color: #b24a2b;
+}
+
 .nav-logo .mark {
-  width: 30px;
-  height: 30px;
+  height: 1em;
+  width: 0.72em;
   flex-shrink: 0;
+  display: block;
+  margin-top: -0.04em;
+}
+
+.nav-logo .swash {
+  width: 100%;
+  height: 0.2em;
+  display: block;
+}
+/* logo webp for login & signup pages */
+.auth-logo {
+  width: 100%;
+  max-width: 350px;
+  /* height: 60px; */
+  margin: 0 auto 15px auto;
+}
+
+.auth-logo img {
+  width: clamp(120px, 50%, 220px);
+  margin: 0 auto;
+  height: auto;
+  display: block;
 }
 .nav-links {
   display: flex;
@@ -158,11 +202,13 @@ header.nav {
 .nav-links a:hover::after {
   transform: scaleX(1);
 }
-
+.mobile-order-btn {
+  display: none;
+}
 .nav-cta {
   font-size: 0.88rem;
   font-weight: 700;
-  color: #fff;
+  color: var(--paper);
   background: var(--clay);
   padding: 11px 22px;
   border-radius: 999px 8px 999px 8px;
@@ -174,7 +220,97 @@ header.nav {
   background: var(--clay-dark);
   transform: translateY(-2px);
 }
+/* login and guest */
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
 
+/* دکمه سفارش محصول */
+.nav-cta {
+  background-color: var(--clay);
+  color: var(--paper);
+  padding: 8px 20px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 14px;
+  white-space: nowrap; /* جلوگیری از شکستن متن */
+}
+
+/* --- حالت مهمان (ورود / ثبت نام) --- */
+.guest-links {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+}
+
+.nav-auth-link {
+  color: var(--ink);
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.nav-auth-link:hover {
+  color: var(--clay-dark);
+}
+
+.divider {
+  color: var(--glaze);
+}
+
+/* --- حالت کاربر لاگین شده (پروفایل) --- */
+.user-nav-container {
+  visibility: hidden;
+}
+.user-logged-in {
+  display: none;
+  align-items: center;
+  gap: 12px;
+  background-color: var(--paper);
+  padding: 6px 15px;
+  border-radius: 50px;
+  border: 1px solid var(--paper);
+  white-space: nowrap;
+}
+
+.profile-dropdown {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  color: var(--ink);
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.profile-dropdown i {
+  color: var(--clay);
+  font-size: 16px;
+}
+
+.profile-dropdown:hover {
+  color: var(--clay);
+}
+
+#logout-btn {
+  background: none;
+  border: none;
+  color: var(--clay);
+  cursor: pointer;
+  font-size: 15px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  transition: transform 0.2s;
+}
+
+#logout-btn:hover {
+  transform: scale(1.15);
+}
 .nav-toggle {
   display: none;
   background: none;
@@ -225,7 +361,7 @@ header.nav {
   content: "❖";
 }
 h1.hero-title {
-  font-family: "Lalezar", sans-serif;
+  font-family: var(--font-display);
   font-weight: 400;
   font-size: clamp(2.6rem, 5.6vw, 4.4rem);
   line-height: 1.18;
@@ -325,7 +461,7 @@ section {
   margin-bottom: 10px;
 }
 .section-title {
-  font-family: "Lalezar", sans-serif;
+  font-family: var(--font-display);
   font-weight: 400;
   font-size: clamp(1.9rem, 3.4vw, 2.7rem);
   margin: 0;
@@ -376,7 +512,7 @@ section {
   background: var(--paper);
   border-right: 3px solid var(--clay);
   border-radius: 4px 18px 4px 18px;
-  font-family: "Lalezar", sans-serif;
+  font-family: var(--font-display);
   font-size: 1.25rem;
   color: var(--clay-dark);
 }
@@ -491,7 +627,7 @@ section {
   color: var(--ink-soft);
 }
 .product-price {
-  font-family: "JetBrains Mono", monospace;
+  font-family: var(--font-mono);
   color: var(--clay-dark);
   font-weight: 600;
 }
@@ -501,7 +637,7 @@ section {
   text-align: center;
 }
 .testimonial blockquote {
-  font-family: "Lalezar", sans-serif;
+  font-family: var(--font-display);
   font-size: clamp(1.4rem, 3vw, 2rem);
   max-width: 26ch;
   margin: 0 auto 22px;
@@ -592,7 +728,118 @@ footer {
   color: var(--ink-soft);
   border-top: 1px dashed var(--line);
 }
+/* logout modal styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(44, 34, 26, 0.6); /* رنگ --ink با شفافیت */
+  backdrop-filter: blur(4px); /* افکت تاری پس‌زمینه */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
 
+/* کلاس مخفی کردن (با جاوااسکریپت فعال می‌شود) */
+.modal-overlay.hidden {
+  visibility: hidden;
+  opacity: 0;
+}
+.modal-overlay:not(.hidden) {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* محتوای مودال */
+.modal-content {
+  background-color: var(--paper); /* رنگ پس‌زمینه سایت */
+  padding: 30px;
+  border-radius: 16px;
+  width: 90%;
+  max-width: 400px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--line);
+  transform: translateY(30px);
+  transition: transform 0.5s ease-out;
+}
+.modal-overlay:not(.hidden) .modal-content {
+  transform: translateY(0);
+}
+
+.modal-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  margin: 0 auto 20px auto;
+  transform: translateY(10px);
+  transition: transform 0.9s ease-out;
+}
+
+.warning-icon {
+  background-color: rgba(178, 74, 43, 0.1); /* --clay با شفافیت */
+  color: var(--clay);
+}
+
+.modal-content h2 {
+  color: var(--ink);
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+.modal-content p {
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+  margin-bottom: 25px;
+  line-height: 1.6;
+}
+
+/* دکمه‌ها */
+.modal-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.modal-actions button {
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  border: none;
+  flex: 1;
+}
+
+.btn-confirm-logout {
+  background-color: var(--clay);
+  color: #fff;
+}
+
+.btn-confirm-logout:hover {
+  background-color: var(--clay-dark);
+}
+
+.btn-cancel-logout {
+  background-color: var(--sand-light);
+  color: var(--ink);
+  border: 1px solid var(--line) !important;
+}
+
+.btn-cancel-logout:hover {
+  background-color: var(--sand);
+}
 /* ---------- RESPONSIVE ---------- */
 @media (max-width: 1160px) {
   .hero.wrap {
@@ -624,12 +871,21 @@ footer {
     margin: 0 auto;
   }
 }
-@media (max-width: 720px) {
+@media (max-width: 884px) {
   /* .nav-links, */
   .nav-cta {
-    /* display: none; */
+    display: none;
     font-size: 0.7rem;
     padding: 8px 12px;
+  }
+  .mobile-order-btn {
+    display: block;
+    color: var(--clay);
+    font-weight: bold;
+    margin-top: 1rem;
+  }
+  .nav-actions {
+    gap: 1.5rem;
   }
   .nav-toggle {
     display: block;
@@ -671,6 +927,7 @@ footer {
       transform 0.4s var(--ease),
       opacity 0.4s var(--ease);
   }
+
   .nav-links.open {
     /* visibility: visible; */
     transform: translateX(0);
@@ -700,7 +957,50 @@ footer {
   .hero {
     margin-top: 6.5rem;
   }
+  /* profile */
+  .user-logged-in {
+    padding: 4px 8px;
+    gap: 5px;
+  }
+
+  .profile-dropdown {
+    font-size: 12px;
+  }
+
+  .profile-dropdown i {
+    font-size: 12px;
+  }
+
+  #logout-btn i {
+    font-size: 12px;
+  }
+
+  .nav-logo {
+    font-size: 16px;
+  }
+  .user-nav-container {
+    margin-left: 1.5rem;
+  }
+
+  .nav-actions {
+    gap: 8px;
+  }
+  /* logout modal */
+  .modal-content {
+    max-width: 250px;
+  }
+  .modal-content h2,
+  .modal-content p {
+    font-size: 0.8rem;
+  }
+  .modal-actions {
+    flex-direction: column;
+  }
+  .modal-actions button {
+    font-size: 0.75rem;
+  }
 }
+
 @media (prefers-reduced-motion: reduce) {
   * {
     animation: none !important;

@@ -59,6 +59,7 @@ const handleLogout = async () => {
   confirmLogoutBtn.disabled = true;
   confirmLogoutBtn.classList.add("disable");
   cancelLogoutBtn.classList.add("disable");
+  cancelLogoutBtn.disabled = true;
 
   await new Promise((resolve) => setTimeout(resolve, 2000));
   let isSuccess = false;
@@ -81,6 +82,7 @@ const handleLogout = async () => {
       confirmLogoutBtn.disabled = false;
       confirmLogoutBtn.classList.remove("disable");
       cancelLogoutBtn.classList.remove("disable");
+      cancelLogoutBtn.disabled = false;
     }
   }
 };

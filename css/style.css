@@ -205,17 +205,7 @@ header.nav {
 .mobile-order-btn {
   display: none;
 }
-.nav-cta {
-  font-size: 0.88rem;
-  font-weight: 700;
-  color: var(--paper);
-  background: var(--clay);
-  padding: 11px 22px;
-  border-radius: 999px 8px 999px 8px;
-  transition:
-    background 0.25s var(--ease),
-    transform 0.25s var(--ease);
-}
+
 .nav-cta:hover {
   background: var(--clay-dark);
   transform: translateY(-2px);
@@ -226,9 +216,51 @@ header.nav {
   align-items: center;
   gap: 20px;
 }
+/* استایل آیکون سبد خرید در header */
+.cart-icon-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink);
+  font-size: 1.4rem;
+  margin-right: 15px;
+  transition:
+    color 0.3s ease,
+    transform 0.2s ease;
+}
 
+.cart-icon-wrapper:hover {
+  color: var(--clay);
+  transform: scale(1.05);
+}
+
+/* نشانگر تعداد (دایره قرمز روی آیکون) */
+.cart-badge {
+  position: absolute;
+  top: -6px;
+  right: -8px;
+  background-color: var(--clay);
+  color: var(--paper);
+  font-size: 0.7rem;
+  font-weight: bold;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--sand-light); /* حاشیه به رنگ هدر */
+  transition: all 0.3s ease;
+}
+
+/* اگر سبد خرید خالی بود (عدد صفر)، نشانگر را کمی کمرنگ‌تر یا مخفی کنیم (اختیاری) */
+.cart-badge[data-count="0"] {
+  display: none;
+}
 /* دکمه سفارش محصول */
 .nav-cta {
+  display: none;
   background-color: var(--clay);
   color: var(--paper);
   padding: 8px 20px;
@@ -631,7 +663,51 @@ section {
   color: var(--clay-dark);
   font-weight: 600;
 }
+/* basket button */
+.add-to-cart-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 70%;
+  margin-top: 15px;
+  padding: 8px 3px;
+  background-color: var(--clay);
+  color: var(--paper);
+  border: none;
+  border-radius: var(--radius-organic);
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: bold;
+  cursor: pointer;
 
+  box-shadow:
+    2px 0px 6px var(--clay-dark),
+    0 0 6px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.add-to-cart-btn:hover {
+  background-color: var(--clay-dark);
+  transform: translateY(-3px);
+  box-shadow:
+    2px 0px 6px var(--clay-dark),
+    0 0 6px rgba(0, 0, 0, 0.2);
+}
+
+.add-to-cart-btn:active {
+  transform: translateY(1px);
+  box-shadow: 0 2px 5px rgba(142, 58, 33, 0.2);
+}
+
+.add-to-cart-btn i {
+  font-size: 1.1rem;
+  transition: transform 0.3s ease;
+}
+
+.add-to-cart-btn:hover i {
+  transform: scale(1.15) rotate(-5deg);
+}
 /* ---------- TESTIMONIAL ---------- */
 .testimonial {
   text-align: center;
@@ -879,7 +955,7 @@ footer {
     padding: 8px 12px;
   }
   .mobile-order-btn {
-    display: block;
+    display: none;
     color: var(--clay);
     font-weight: bold;
     margin-top: 1rem;

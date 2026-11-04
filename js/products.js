@@ -156,19 +156,26 @@ function render() {
   grid.innerHTML = pageItems
     .map(
       (p) => `
-    <div class="product-card">
-      <div class="product-image">
-        ${
-          p.src
-            ? `<img src="${p.src}" alt="${p.name}" loading="lazy" />`
-            : `<svg viewBox="0 0 100 100" fill="none">${CATEGORY_ICONS[p.category] || ""}</svg>`
-        }
-      </div>
-      <div class="product-name">${p.name}</div>
-      <div class="product-meta">
-        <span> ${p.category}</span>
-        <span class="product-price">${formatPrice(p.price)} ت</span>
-      </div>
+   
+      <div class="product-card">
+      <a href="product-detail.html?id=${p.id}" class="product-card-link">
+        <div class="product-image">
+          ${
+            p.src
+              ? `<img src="${p.src}" alt="${p.name}" loading="lazy" />`
+              : `<svg viewBox="0 0 100 100" fill="none">${CATEGORY_ICONS[p.category] || ""}</svg>`
+          }
+        </div>
+        <div class="product-name">${p.name}</div>
+        <div class="product-meta">
+          <span> ${p.category}</span>
+          <span class="product-price">${formatPrice(p.price)} ت</span>
+        </div>
+      </a>
+      <button class="add-to-cart-btn" data-id="${p.id}">
+        <i class="fa-solid fa-cart-shopping"></i>
+        افزودن به سبد
+      </button>
     </div>
   `,
     )
@@ -225,18 +232,5 @@ searchInput.addEventListener("input", () => {
     render();
   }, 200);
 });
-
-// منوی موبایل (مشترک با صفحه اصلی)
-// const navToggle = document.getElementById("navToggle");
-// const navLinks = document.querySelector(".nav-links");
-// if (navToggle){
-//   navToggle.addEventListener("click", () => {
-//     const open = navLinks.style.display === "flex";
-//     navLinks.style.display = open ? "none" : "flex";
-//     navLinks.style.cssText += open
-//       ? ""
-//       : "position:fixed; top:64px; right:20px; left:20px; background:#FBF6EC; flex-direction:column; padding:20px; border:1px solid var(--line); border-radius:10px; gap:18px; z-index:99;";
-//   });
-// }
 
 render();

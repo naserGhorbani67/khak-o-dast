@@ -46,7 +46,11 @@
         <div class="nav-actions">
           <!-- دکمه سفارش محصول -->
           <a href="#contact" class="nav-cta">سفارش محصول</a>
-
+          <!--  آیکون سبد خرید  -->
+          <a href="cart.html" class="cart-icon-wrapper" title="سبد خرید">
+            <i class="fa-solid fa-cart-shopping"></i>
+            <span class="cart-badge" id="cartBadge" data-count="0">0</span>
+          </a>
           <!-- بخش کاربری -->
           <div class="user-nav-container">
             <!-- حالت ۱: مهمان (ورود / ثبت نام) -->
@@ -120,7 +124,9 @@
 
         <div class="results-meta" id="resultsMeta"></div>
 
-        <div class="product-grid" id="productGrid"></div>
+        <div class="product-grid" id="productGrid">
+          <!-- card load form js -->
+        </div>
 
         <div class="empty-state" id="emptyState">
           <div class="t">محصولی پیدا نشد</div>

@@ -4,9 +4,10 @@
   border-top: none;
 }
 .breadcrumb {
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   color: var(--ink-soft);
   margin-bottom: 18px;
+  font-weight: 700;
 }
 .breadcrumb a {
   color: var(--clay);

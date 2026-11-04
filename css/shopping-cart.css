@@ -1,0 +1,294 @@
+/* =========================================
+   استایل‌های صفحه سبد خرید
+   ========================================= */
+
+.cart-container {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+.breadcrumb-container-shopping-cart {
+  display: flex;
+  align-items: center;
+  margin-top: 100px;
+}
+.product-detail-breadcrumb-container span:nth-child(2) {
+  margin-left: 0.5rem;
+}
+
+.cart-page-title {
+  font-size: 1.8rem;
+  color: var(--ink);
+  margin-bottom: 30px;
+  font-weight: 800;
+}
+
+/* --- شبکه اصلی (دو ستونی) --- */
+.cart-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr; /* ستون راست بزرگتر، ستون چپ کوچکتر */
+  gap: 30px;
+  align-items: start;
+}
+
+/* =========================================
+   ستون محصولات
+   ========================================= */
+.cart-items-section {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* کارت هر محصول در سبد */
+.cart-item-card {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  background-color: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 15px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+}
+
+.cart-item-image {
+  width: 100px;
+  height: 100px;
+  border-radius: 12px;
+  overflow: hidden;
+  background-color: var(--sand-light);
+  flex-shrink: 0;
+}
+
+.cart-item-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cart-item-details {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cart-item-name {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: var(--ink);
+}
+
+.cart-item-price {
+  font-size: 1rem;
+  color: var(--clay);
+  font-weight: bold;
+}
+
+/* انتخابگر تعداد در سبد */
+.cart-item-qty {
+  display: flex;
+  align-items: center;
+  background-color: var(--sand-light);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  width: max-content;
+  padding: 3px;
+}
+
+.cart-item-qty button {
+  background: none;
+  border: none;
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+  color: var(--ink);
+  font-size: 1.1rem;
+  border-radius: 6px;
+}
+
+.cart-item-qty button:hover {
+  background-color: var(--sand);
+}
+
+.cart-item-qty span {
+  width: 30px;
+  text-align: center;
+  font-weight: bold;
+}
+
+/* دکمه حذف محصول */
+.cart-item-remove {
+  background: none;
+  border: none;
+  color: #d9534f;
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 10px;
+  transition: transform 0.2s;
+}
+
+.cart-item-remove:hover {
+  transform: scale(1.1);
+}
+
+/* =========================================
+   ستون خلاصه سفارش
+   ========================================= */
+.cart-summary-card {
+  background-color: var(--sand-light);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 25px;
+  position: sticky;
+  top: 100px; /* چسبیدن به بالای صفحه هنگام اسکرول */
+}
+
+.cart-summary-card h2 {
+  font-size: 1.2rem;
+  color: var(--ink);
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid var(--line);
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+}
+
+.shipping-row {
+  padding-bottom: 15px;
+  border-bottom: 1px solid var(--line);
+}
+
+.summary-total {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  margin-bottom: 25px;
+  font-size: 1.2rem;
+  font-weight: 900;
+  color: var(--clay-dark);
+}
+
+/* دکمه نهایی کردن خرید */
+.checkout-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  background-color: var(--clay);
+  color: var(--paper);
+  padding: 16px;
+  border: none;
+  border-radius: var(--radius-organic);
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow:
+    2px 0px 6px var(--clay-dark),
+    0 0 6px rgba(0, 0, 0, 0.2);
+}
+
+.checkout-btn:hover {
+  background-color: var(--clay-dark);
+  transform: translateY(-2px);
+  box-shadow:
+    2px 0px 6px var(--clay-dark),
+    0 0 6px rgba(0, 0, 0, 0.2);
+}
+
+.checkout-btn:active {
+  transform: translateY(2px);
+  box-shadow: none;
+}
+
+/* =========================================
+   حالت سبد خالی
+   ========================================= */
+.empty-cart-state {
+  text-align: center;
+  padding: 80px 20px;
+  background-color: var(--paper);
+  border-radius: 20px;
+  border: 1px dashed var(--line);
+}
+
+.empty-cart-state i {
+  font-size: 60px;
+  color: var(--line);
+  margin-bottom: 20px;
+}
+
+.empty-cart-state h2 {
+  color: var(--ink);
+  margin-bottom: 10px;
+}
+
+.empty-cart-state p {
+  color: var(--ink-soft);
+  margin-bottom: 30px;
+}
+
+.btn-return-shop {
+  display: inline-block;
+  background-color: var(--clay);
+  color: var(--paper);
+  padding: 12px 30px;
+  border-radius: var(--radius-organic);
+  text-decoration: none;
+  font-weight: bold;
+  box-shadow:
+    2px 0px 6px var(--clay-dark),
+    0 0 6px rgba(0, 0, 0, 0.2);
+  transition: background 0.3s;
+}
+
+.btn-return-shop:hover {
+  background-color: var(--clay-dark);
+  box-shadow:
+    2px 0px 6px var(--clay-dark),
+    0 0 6px rgba(0, 0, 0, 0.2);
+}
+
+/* =========================================
+   ریسپانسیو (موبایل)
+   ========================================= */
+@media (max-width: 850px) {
+  .cart-grid {
+    grid-template-columns: 1fr; /* تبدیل به یک ستون */
+  }
+
+  .cart-summary-card {
+    position: static; /* غیرفعال کردن حالت چسبنده در موبایل */
+  }
+}
+
+@media (max-width: 500px) {
+  .cart-item-card {
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+  }
+
+  .cart-item-image {
+    width: 100%;
+    height: 200px;
+  }
+
+  .cart-item-remove {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 50%;
+  }
+}

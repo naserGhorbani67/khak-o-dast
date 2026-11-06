@@ -1,4 +1,6 @@
 import { clientSupabase } from "./auth.js";
+import { getCart } from "./shoping-cart-logic.js";
+import { updateCartBadge } from "./shoping-cart-logic.js";
 
 const navToggle = document.getElementById("navToggle");
 const navLinks = document.querySelector(".nav-links");
@@ -151,6 +153,7 @@ formBtn?.addEventListener("click", submitMessage);
 // login and logout user
 document.addEventListener("DOMContentLoaded", () => {
   checkUserAuthStatus();
+  updateCartBadge();
 
   if (logoutBtn && logoutModal) {
     logoutBtn.addEventListener("click", () => {

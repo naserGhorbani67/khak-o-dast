@@ -1,4 +1,5 @@
 import { clientSupabase } from "./auth.js";
+import { addToCart, updateCartBadge } from "./shoping-cart-logic.js";
 // ---------- داده محصولات ----------
 // نکته: بعداً می‌تونید این آرایه رو با داده واقعی (یا fetch از یک JSON/API) جایگزین کنید.
 // const PRODUCTS = [
@@ -27,7 +28,7 @@ import { clientSupabase } from "./auth.js";
 //     id: 4,
 //     name: "گلدان کوچک رومیزی",
 //     category: "گلدان",
-//     src: "./imges/goldan va kooze.jpg",
+//     src: "./imges/goldankoochack.jpg",
 //     price: 210000,
 //   },
 //   {
@@ -150,7 +151,28 @@ const fetchProducts = async () => {
     grid.innerHTML = `<p style="text-align:center; width:100% grid-column:1/-1;color:red">خطا در بارگذاری محصولات</p>`;
   }
 };
+// مدیریت کلیک روی دکمه‌های افزودن به سبد در صفحه محصولات
+document.addEventListener("click", (e) => {
+  // چک می‌کنیم آیا عنصری که کلیک شده، دکمه افزودن به سبد است یا نه
+  if (e.target.closest(".add-to-cart-btn")) {
+    const btn = e.target.closest(".add-to-cart-btn");
+    const productId = btn.getAttribute("data-id"); // گرفتن آیدی از دکمه
 
+    addToCart(productId, 1); // فراخوانی تابع با تعداد ۱
+    updateCartBadge();
+
+    // تغییر موقت متن دکمه برای بازخورد به کاربر
+    const originalText = btn.innerHTML;
+    btn.innerHTML = '<i class="fa-solid fa-check"></i> اضافه شد';
+    btn.disabled = true;
+    btn.classList.add("disable");
+    setTimeout(() => {
+      btn.innerHTML = originalText;
+      btn.disabled = false;
+      btn.classList.remove("disable");
+    }, 1500);
+  }
+});
 function render() {
   const filtered = getFiltered();
   const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));

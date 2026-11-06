@@ -1,105 +1,106 @@
+import { clientSupabase } from "./auth.js";
 // ---------- داده محصولات ----------
 // نکته: بعداً می‌تونید این آرایه رو با داده واقعی (یا fetch از یک JSON/API) جایگزین کنید.
-const PRODUCTS = [
-  {
-    id: 1,
-    name: "پارچ آب سفالی بزرگ",
-    category: "کوزه",
-    src: "./imges/images-parch.jpg",
-    price: 890000,
-  },
-  {
-    id: 2,
-    name: "کوزه و گلدان ساده",
-    category: "کوزه",
-    src: "./imges/koozevagoldan.jpg",
-    price: 620000,
-  },
-  {
-    id: 3,
-    name: " خمره سفالی پهن",
-    category: "کوزه",
-    price: 450000,
-    src: "./imges/khomre-square-final.webp",
-  },
-  {
-    id: 4,
-    name: "گلدان کوچک رومیزی",
-    category: "گلدان",
-    src: "./imges/goldan va kooze.jpg",
-    price: 210000,
-  },
-  {
-    id: 5,
-    name: "گلدان بزرگ باغچه‌ای",
-    category: "گلدان",
-    src: "./imges/goldan-baghchei.webp",
-    price: 980000,
-  },
-  {
-    id: 6,
-    name: "مجسمه گِلی «مادر و کودک»",
-    category: "مجسمه",
-    src: "./imges/kate-baby-2.jpg",
-    price: 1200000,
-  },
-  {
-    id: 7,
-    name: "مجسمه چهره انسان  ",
-    category: "مجسمه",
-    src: "./imges/human-face.webp",
-    price: 340000,
-  },
-  {
-    id: 8,
-    name: "ست کاسه و بشقاب سفالی",
-    category: "ظروف",
-    src: "./imges/boshghab_kasse.jpg",
-    price: 670000,
-  },
-  {
-    id: 9,
-    name: "فنجان سرامیکی طرح دار",
-    category: "ظروف",
-    src: "./imges/fenjan2.jpg",
-    price: 180000,
-  },
-  {
-    id: 10,
-    name: "کاسه سرو سالاد لعاب سبز",
-    category: "ظروف",
-    src: "./imges/converted.webp",
-    price: 390000,
-  },
-  {
-    id: 11,
-    name: "آویز دیواری طرح ماه اسفند  ",
-    category: "ظروف",
-    src: "./imges/aviz-divari.webp",
-    price: 540000,
-  },
-  {
-    id: 12,
-    name: "لیوان لعابی طرح دار",
-    category: "ظروف",
-    src: "./imges/livan.webp",
-    price: 310000,
-  },
-  {
-    id: 13,
-    name: "مجسمه نیم تنه انسان ",
-    category: "مجسمه",
-    src: "./imges/oldman-face.webp",
-    price: 460000,
-  },
-  {
-    id: 14,
-    name: "ست لیوان و پارچ سفالی  ",
-    category: "ظروف",
-    src: "./imges/livanvaparch.webp",
-    price: 500000,
-  },
-];
+// const PRODUCTS = [
+//   {
+//     id: 1,
+//     name: "پارچ آب سفالی بزرگ",
+//     category: "کوزه",
+//     src: "./imges/images-parch.jpg",
+//     price: 890000,
+//   },
+//   {
+//     id: 2,
+//     name: "کوزه و گلدان ساده",
+//     category: "کوزه",
+//     src: "./imges/koozevagoldan.jpg",
+//     price: 620000,
+//   },
+//   {
+//     id: 3,
+//     name: " خمره سفالی پهن",
+//     category: "کوزه",
+//     price: 450000,
+//     src: "./imges/khomre-square-final.webp",
+//   },
+//   {
+//     id: 4,
+//     name: "گلدان کوچک رومیزی",
+//     category: "گلدان",
+//     src: "./imges/goldan va kooze.jpg",
+//     price: 210000,
+//   },
+//   {
+//     id: 5,
+//     name: "گلدان بزرگ باغچه‌ای",
+//     category: "گلدان",
+//     src: "./imges/goldan-baghchei.webp",
+//     price: 980000,
+//   },
+//   {
+//     id: 6,
+//     name: "مجسمه گِلی «مادر و کودک»",
+//     category: "مجسمه",
+//     src: "./imges/kate-baby-2.jpg",
+//     price: 1200000,
+//   },
+//   {
+//     id: 7,
+//     name: "مجسمه چهره انسان  ",
+//     category: "مجسمه",
+//     src: "./imges/human-face.webp",
+//     price: 340000,
+//   },
+//   {
+//     id: 8,
+//     name: "ست کاسه و بشقاب سفالی",
+//     category: "ظروف",
+//     src: "./imges/boshghab_kasse.jpg",
+//     price: 670000,
+//   },
+//   {
+//     id: 9,
+//     name: "فنجان سرامیکی طرح دار",
+//     category: "ظروف",
+//     src: "./imges/fenjan2.jpg",
+//     price: 180000,
+//   },
+//   {
+//     id: 10,
+//     name: "کاسه سرو سالاد لعاب سبز",
+//     category: "ظروف",
+//     src: "./imges/converted.webp",
+//     price: 390000,
+//   },
+//   {
+//     id: 11,
+//     name: "آویز دیواری طرح ماه اسفند  ",
+//     category: "ظروف",
+//     src: "./imges/aviz-divari.webp",
+//     price: 540000,
+//   },
+//   {
+//     id: 12,
+//     name: "لیوان لعابی طرح دار",
+//     category: "ظروف",
+//     src: "./imges/livan.webp",
+//     price: 310000,
+//   },
+//   {
+//     id: 13,
+//     name: "مجسمه نیم تنه انسان ",
+//     category: "مجسمه",
+//     src: "./imges/oldman-face.webp",
+//     price: 460000,
+//   },
+//   {
+//     id: 14,
+//     name: "ست لیوان و پارچ سفالی  ",
+//     category: "ظروف",
+//     src: "./imges/livanvaparch.webp",
+//     price: 500000,
+//   },
+// ];
 
 const CATEGORY_ICONS = {
   کوزه: '<path d="M30 30 Q28 20 50 18 Q72 20 70 30 L66 80 Q64 92 50 92 Q36 92 34 80 Z" fill="#FBF6EC" opacity="0.9"/>',
@@ -109,6 +110,7 @@ const CATEGORY_ICONS = {
     '<circle cx="50" cy="40" r="14" fill="#FBF6EC" opacity="0.9"/><path d="M36 54 Q50 92 64 54 Z" fill="#FBF6EC" opacity="0.9"/>',
   ظروف: '<ellipse cx="50" cy="60" rx="30" ry="10" fill="#FBF6EC" opacity="0.9"/><path d="M25 60 Q50 40 75 60" stroke="#FBF6EC" stroke-width="4" fill="none" opacity="0.9"/>',
 };
+let productsData = [];
 
 const PAGE_SIZE = 8;
 
@@ -130,13 +132,24 @@ function formatPrice(n) {
 }
 
 function getFiltered() {
-  return PRODUCTS.filter((p) => {
+  return productsData.filter((p) => {
     const matchesCategory =
       state.category === "همه" || p.category === state.category;
     const matchesQuery = p.name.includes(state.query.trim());
     return matchesCategory && matchesQuery;
   });
 }
+const fetchProducts = async () => {
+  try {
+    const { data, error } = await clientSupabase.from("products").select("*");
+    if (error) throw error;
+    productsData = data;
+    render();
+  } catch (error) {
+    console.error("خطا در دریافت محصولات", error);
+    grid.innerHTML = `<p style="text-align:center; width:100% grid-column:1/-1;color:red">خطا در بارگذاری محصولات</p>`;
+  }
+};
 
 function render() {
   const filtered = getFiltered();
@@ -161,8 +174,8 @@ function render() {
       <a href="product-detail.html?id=${p.id}" class="product-card-link">
         <div class="product-image">
           ${
-            p.src
-              ? `<img src="${p.src}" alt="${p.name}" loading="lazy" />`
+            p.image_url
+              ? `<img src="${p.image_url}" alt="${p.name}" loading="lazy" />`
               : `<svg viewBox="0 0 100 100" fill="none">${CATEGORY_ICONS[p.category] || ""}</svg>`
           }
         </div>
@@ -233,4 +246,4 @@ searchInput.addEventListener("input", () => {
   }, 200);
 });
 
-render();
+fetchProducts();

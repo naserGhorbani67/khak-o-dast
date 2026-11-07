@@ -78,7 +78,7 @@ const handleLogout = async () => {
     if (isSuccess) {
       setTimeout(() => {
         window.location.href = "index.html";
-      }, 2000);
+      }, 1500);
     } else {
       confirmLogoutBtn.innerHTML = " تلاش مجدد";
       confirmLogoutBtn.disabled = false;
@@ -153,7 +153,7 @@ formBtn?.addEventListener("click", submitMessage);
 // login and logout user
 document.addEventListener("DOMContentLoaded", () => {
   checkUserAuthStatus();
-  updateCartBadge();
+  updateCartBadge(); //به روز رسانی عدد آیکون سبد خرید در بالای صفحه
 
   if (logoutBtn && logoutModal) {
     logoutBtn.addEventListener("click", () => {

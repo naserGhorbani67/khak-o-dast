@@ -111,7 +111,7 @@ const CATEGORY_ICONS = {
     '<circle cx="50" cy="40" r="14" fill="#FBF6EC" opacity="0.9"/><path d="M36 54 Q50 92 64 54 Z" fill="#FBF6EC" opacity="0.9"/>',
   ظروف: '<ellipse cx="50" cy="60" rx="30" ry="10" fill="#FBF6EC" opacity="0.9"/><path d="M25 60 Q50 40 75 60" stroke="#FBF6EC" stroke-width="4" fill="none" opacity="0.9"/>',
 };
-let productsData = [];
+let productsData = []; //داده های گرفته شده با fetch باید داخل این آرایه ریخته بشه
 
 const PAGE_SIZE = 8;
 

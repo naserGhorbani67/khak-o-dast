@@ -14,7 +14,7 @@ export const getCart = () => {
   }
 };
 // تابعی برای ذخیره سبد خرید در حافظهء (داخلی)
-const saveCart = (cart) => {
+export const saveCart = (cart) => {
   localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart));
 };
 // تابع اضافه کردن محصول به سبد خرید

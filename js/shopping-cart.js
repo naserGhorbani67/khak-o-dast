@@ -80,7 +80,8 @@ const updateShoppingCartSummary = (productsData) => {
     if (finalPriceElem) finalPriceElem.innerHTML = "0";
   }
   const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-  if (totalItemsCount) totalItemsCount.innerHTML = totalItems;
+  if (totalItemsCount)
+    totalItemsCount.innerHTML = totalItems.toLocaleString("fa-IR");
 
   cart.forEach((cartItem) => {
     if (productsData && productsData.length > 0) {
@@ -126,8 +127,8 @@ document.addEventListener("click", (e) => {
         item.quantity -= 1;
       } else {
         // اگر تعداد یک بود و کاربر کمتر کرد محصول حذف شود
-        const index = cart.findIndex((i) => i.id === productId);
-        cart.splice(index, 1);
+        productToDeleteId = productId;
+        deleteModal.classList.remove("hidden");
       }
       saveCart(cart);
       renderShoppingCart();

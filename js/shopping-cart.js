@@ -6,8 +6,15 @@ const emptyCartState = document.querySelector("#emptyCartState");
 const cartItemsSection = document.querySelector("#cartItemsSection");
 // shopping cart summary
 const totalItemsCount = document.querySelector("#totalItemsCount");
-const totalPrice = document.querySelector("#totalPrice");
-const finalPrice = document.querySelector("#finalPrice");
+const totalPriceElem = document.querySelector("#totalPrice");
+const finalPriceElem = document.querySelector("#finalPrice");
+// delete modal screen
+const deleteModal = document.querySelector("#deleteModal");
+const confirmDeleteBtn = document.querySelector("#confirmDeleteBtn");
+const cancelDeleteBtn = document.querySelector("#cancelDeleteBtn");
+const messageDelete = document.querySelector("#messageDelete");
+
+let productToDeleteId = null;
 
 const renderShoppingCart = async () => {
   let cartHTML = "";
@@ -58,16 +65,37 @@ const renderShoppingCart = async () => {
         `;
       });
       cartItemsSection.innerHTML = cartHTML;
+      updateShoppingCartSummary(productsData);
     } catch (error) {
       console.error("خطا در دریافت اطلاعات محصولات سبد", error);
     }
   }
 };
-const updateShoppingCartSummary = () => {
+const updateShoppingCartSummary = (productsData) => {
   const cart = getCart();
+  let totalPrice = 0;
+  if (cart.length === 0) {
+    if (totalItemsCount) totalItemsCount.innerHTML = "0";
+    if (totalPriceElem) totalPriceElem.innerHTML = "0";
+    if (finalPriceElem) finalPriceElem.innerHTML = "0";
+  }
   const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
   if (totalItemsCount) totalItemsCount.innerHTML = totalItems;
-  //   ادامه کد در آینده
+
+  cart.forEach((cartItem) => {
+    if (productsData && productsData.length > 0) {
+      const product = productsData.find((p) => p.id === cartItem.id);
+      if (product) {
+        totalPrice += product.price * cartItem.quantity;
+      }
+    }
+  });
+  if (totalPrice > 0) {
+    if (totalPriceElem)
+      totalPriceElem.innerHTML = totalPrice.toLocaleString("fa-IR");
+    if (finalPriceElem)
+      finalPriceElem.innerHTML = totalPrice.toLocaleString("fa-IR");
+  }
 };
 // مدریریت کلیک روی دکمه‌های داخل سبد خرید
 document.addEventListener("click", (e) => {
@@ -110,16 +138,52 @@ document.addEventListener("click", (e) => {
   //   دکمه حذف (سطل زباله)
   if (e.target.closest(".cart-item-remove")) {
     const btn = e.target.closest(".cart-item-remove");
-    const productId = btn.getAttribute("data-id");
+    productToDeleteId = btn.getAttribute("data-id");
 
-    const cart = getCart();
-    const updateCart = cart.filter((i) => i.id !== productId);
-    saveCart(updateCart);
-    renderShoppingCart();
-    updateCartBadge();
-    updateShoppingCartSummary();
+    deleteModal.classList.remove("hidden");
   }
 });
+const deleteShoppingCart = () => {
+  if (!productToDeleteId) {
+    return;
+  }
+  const cart = getCart();
+  //   تغییر متن دکمه هنگام حذف محصول
+  const orginalBtnText = confirmDeleteBtn.innerHTML;
+  const orginalMessageText = messageDelete.innerHTML;
+  confirmDeleteBtn.innerHTML = "در حال حذف ...";
+  confirmDeleteBtn.disabled = true;
+  confirmDeleteBtn.classList.add("disable");
+  cancelDeleteBtn.disabled = true;
+  cancelDeleteBtn.classList.add("disable");
 
+  const updateCart = cart.filter((i) => i.id !== productToDeleteId);
+  saveCart(updateCart);
+  renderShoppingCart();
+  updateCartBadge();
+  updateShoppingCartSummary();
+  //   نمایش حذف محصول
+  setTimeout(() => {
+    messageDelete.innerHTML = "محصول با موفقیت حذف شد";
+    confirmDeleteBtn.innerHTML = orginalBtnText;
+    confirmDeleteBtn.style.display = "none";
+    cancelDeleteBtn.style.display = "none";
+    setTimeout(() => {
+      hideDeleteModal();
+      confirmDeleteBtn.style.display = ""; // اگه block بشه ممکنه بهم بریزه
+      cancelDeleteBtn.style.display = "";
+      confirmDeleteBtn.disabled = false;
+      confirmDeleteBtn.classList.remove("disable");
+      cancelDeleteBtn.disabled = false;
+      cancelDeleteBtn.classList.remove("disable");
+      messageDelete.innerHTML = orginalMessageText;
+    }, 2000);
+  }, 2000);
+};
+const hideDeleteModal = () => {
+  deleteModal.classList.add("hidden");
+  productToDeleteId = null;
+};
 document.addEventListener("DOMContentLoaded", renderShoppingCart);
-window.addEventListener("load", updateShoppingCartSummary);
+confirmDeleteBtn.addEventListener("click", deleteShoppingCart);
+cancelDeleteBtn.addEventListener("click", hideDeleteModal);

@@ -260,6 +260,68 @@
 }
 
 /* =========================================
+   استایل‌های مودال حذف محصول
+   ========================================= */
+
+.delete-modal-content {
+  max-width: 400px;
+  background-color: var(--paper);
+}
+
+.warning-icon {
+  background-color: rgba(178, 74, 43, 0.1); /* رنگ clay با شفافیت */
+  color: var(--clay);
+}
+
+.delete-modal-content h2 {
+  color: var(--ink);
+  font-size: 1.3rem;
+  margin-bottom: 10px;
+}
+
+.delete-modal-content p {
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+  margin-bottom: 25px;
+  line-height: 1.6;
+}
+
+.modal-actions-delete {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.btn-confirm-delete {
+  background-color: var(--clay);
+  color: var(--paper);
+  padding: 12px 24px;
+  border: none;
+  border-radius: var(--radius-organic);
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.btn-confirm-delete:hover {
+  background-color: var(--clay-dark);
+}
+
+.btn-cancel-delete {
+  background-color: var(--sand-light);
+  color: var(--ink);
+  padding: 12px 24px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-organic);
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.btn-cancel-delete:hover {
+  background-color: var(--sand);
+}
+/* =========================================
    ریسپانسیو (موبایل)
    ========================================= */
 @media (max-width: 850px) {

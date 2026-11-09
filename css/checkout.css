@@ -1,0 +1,250 @@
+/* =========================================
+   استایل‌های صفحه تسویه حساب
+   ========================================= */
+.breadcrumb-container-check-out {
+  display: flex;
+  align-items: center;
+  margin-top: 100px;
+}
+.breadcrumb-container-check-out span:nth-child(2) {
+  margin-left: 0.5rem;
+}
+.checkout-container {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+.checkout-page-title {
+  font-size: 1.8rem;
+  color: var(--ink);
+  margin-bottom: 30px;
+  font-weight: 800;
+}
+
+/* شبکه دو ستونی */
+.checkout-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr; /* فرم بزرگتر، خلاصه کوچکتر */
+  gap: 30px;
+  align-items: start;
+}
+.checkout-form-section {
+  padding: 0;
+  border-top: none;
+}
+/* --- استایل فرم --- */
+.checkout-card {
+  background-color: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 30px;
+}
+
+.checkout-card h2 {
+  font-size: 1.2rem;
+  color: var(--ink);
+  margin-bottom: 25px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.checkout-card h2 i {
+  color: var(--clay);
+}
+
+.checkout-card .form-group {
+  margin-bottom: 20px;
+}
+.form-group textarea {
+  resize: none;
+  overflow-y: auto;
+}
+.checkout-card label {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+}
+
+/* استایل اینپوت‌ها (استفاده از استایل‌های auth.css) */
+.checkout-card .auth-input {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* --- استایل خلاصه سفارش --- */
+.checkout-summary-card {
+  background-color: var(--sand-light);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 25px;
+  position: sticky;
+  top: 100px;
+}
+
+.checkout-summary-card h2 {
+  font-size: 1.2rem;
+  color: var(--ink);
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid var(--line);
+}
+
+/* لیست محصولات در خلاصه */
+.checkout-items-list {
+  max-height: 300px;
+  overflow-y: auto; /* اسکرول در صورت زیاد بودن محصولات */
+  margin-bottom: 20px;
+  padding-left: 10px; /* برای اینکه اسکرول با متن تداخل نکند */
+}
+
+.checkout-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 15px;
+  padding-bottom: 15px;
+  border-bottom: 1px dashed var(--line);
+}
+
+.checkout-item img {
+  width: 60px;
+  height: 60px;
+  border-radius: 8px;
+  object-fit: cover;
+  background-color: var(--sand);
+}
+
+.checkout-item-details {
+  flex-grow: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.checkout-item-name {
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: var(--ink);
+}
+
+.checkout-item-qty {
+  font-size: 0.85rem;
+  color: var(--clay);
+  background-color: rgba(178, 74, 43, 0.1);
+  padding: 3px 8px;
+  border-radius: 50px;
+}
+
+/* دکمه ثبت سفارش */
+.checkout-submit-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  background-color: var(--clay);
+  color: var(--paper);
+  padding: 16px;
+  border: none;
+  border-radius: var(--radius-organic, 12px);
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow:
+    2px 0px 6px var(--clay-dark),
+    0 0 6px rgba(0, 0, 0, 0.2);
+  margin-top: 20px;
+  margin-bottom: 13px;
+}
+
+.checkout-submit-btn:hover {
+  background-color: var(--clay-dark);
+  transform: translateY(-2px);
+}
+
+/* لینک بازگشت */
+.back-to-cart-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 15px;
+  color: var(--ink-soft);
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: color 0.3s;
+}
+
+.back-to-cart-link:hover {
+  color: var(--clay);
+}
+/* ریسپانسیو */
+@media (max-width: 1100px) {
+  .checkout-grid {
+    grid-template-columns: 1fr 1.4fr;
+    gap: 15px;
+  }
+  .checkout-summary-card {
+    padding: 10px;
+  }
+  .checkout-card {
+    padding: 10px;
+  }
+  .checkout-submit-btn {
+    font-size: 1rem;
+  }
+}
+@media (max-width: 890px) {
+  .checkout-grid {
+    grid-template-columns: 1fr; /* یک ستونی در موبایل */
+  }
+  .checkout-container {
+    max-width: 700px;
+    width: 80%;
+  }
+}
+@media (max-width: 650px) {
+  .checkout-item {
+    flex-direction: column;
+  }
+  .checkout-item img {
+    width: 100px;
+    height: 100px;
+  }
+  .checkout-item-details {
+    gap: 0.8rem;
+  }
+}
+/* =========================================
+   ریسپانسیو برای موبایل
+   ========================================= */
+@media (max-width: 520px) {
+  .checkout-page-title {
+    font-size: 1.4rem;
+    margin-bottom: 20px;
+  }
+  .checkout-container {
+    width: 100%;
+  }
+  .checkout-card h2 {
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+  }
+
+  .checkout-item-details {
+    flex-direction: column;
+  }
+  .checkout-submit-btn {
+    padding: 12px;
+  }
+
+  .checkout-card {
+    padding: 20px;
+  }
+}

@@ -3,6 +3,9 @@ const emailRegex =
   /^(?!.*\.\.)[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(com|org|ir|info)$/;
 const passwordRegex =
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,15}$/;
+const phoneRegex = /^09[0-9]{9}$/;
+const addressRegex = /^.{10,}$/;
+const postalCodeRegex = /^[0-9]{10}$/;
 //supabase
 const key = "sb_publishable_O6oTgJNtWu5EcDD7MIjX2A_OJNtZzzv";
 const url = "https://bmicvelxkvvupcballbj.supabase.co";
@@ -37,6 +40,9 @@ export {
   nameRegex,
   emailRegex,
   passwordRegex,
+  phoneRegex,
+  postalCodeRegex,
+  addressRegex,
   toEmptyInputs,
   toEmptyInputsLogin,
   handleModalConfirm,

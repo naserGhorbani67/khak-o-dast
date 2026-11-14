@@ -1,4 +1,4 @@
-const CART_STORAGE_KEY = "khak_o_dast_cart";
+export const CART_STORAGE_KEY = "khak_o_dast_cart";
 
 // تابعی برای خواندن سبد خرید از حافظه
 export const getCart = () => {
@@ -18,13 +18,17 @@ export const saveCart = (cart) => {
   localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart));
 };
 // تابع اضافه کردن محصول به سبد خرید
-export const addToCart = (productId, quantity = 1) => {
+export const addToCart = (productId, productPrice, quantity = 1) => {
   const cart = getCart();
   const existingItemIndex = cart.findIndex((item) => item.id === productId);
   if (existingItemIndex > -1) {
     cart[existingItemIndex].quantity += quantity;
   } else {
-    cart.push({ id: productId, quantity: quantity });
+    cart.push({
+      id: productId,
+      price: Number(productPrice),
+      quantity: quantity,
+    });
   }
   saveCart(cart);
 };

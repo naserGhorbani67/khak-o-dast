@@ -1,6 +1,6 @@
 import { clientSupabase } from "./auth.js";
 import { getCart } from "./shoping-cart-logic.js";
-import { updateCartBadge } from "./shoping-cart-logic.js";
+import { updateCartBadge, CART_STORAGE_KEY } from "./shoping-cart-logic.js";
 
 const navToggle = document.getElementById("navToggle");
 const navLinks = document.querySelector(".nav-links");
@@ -169,5 +169,32 @@ document.addEventListener("DOMContentLoaded", () => {
     confirmLogoutBtn.addEventListener("click", () => {
       handleLogout();
     });
+  }
+});
+// ==========================================
+// همگام‌سازی سبد خرید بین تب‌های مختلف مرورگر
+// ==========================================
+window.addEventListener("storage", (event) => {
+  // چک می‌کنیم آیا کلیدی که تغییر کرده، کلید سبد خرید ما است یا نه
+  if (event.key === CART_STORAGE_KEY) {
+    // ۱. آیکون هدر رو در هر صفحه‌ای که هستیم آپدیت کن
+    if (typeof updateCartBadge === "function") {
+      updateCartBadge();
+    }
+
+    // 👇 ۲. بررسی می‌کنیم در کدام صفحه هستیم 👇
+
+    // حالت اول: اگر در صفحه سبد خرید هستیم (المان cartItemsSection وجود دارد)
+    if (document.getElementById("cartItemsSection")) {
+      if (typeof window.renderShoppingCart === "function") {
+        window.renderShoppingCart();
+      }
+    }
+    // حالت دوم: اگر در صفحه سبد خرید نبودیم، ببین در صفحه تسویه حساب هستیم یا نه
+    else if (document.getElementById("checkoutItemsList")) {
+      if (typeof window.renderCheckoutSummary === "function") {
+        window.renderCheckoutSummary();
+      }
+    }
   }
 });

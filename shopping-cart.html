@@ -203,6 +203,22 @@
         </div>
       </div>
     </div>
+    <!--   logout modal -->
+    <div id="logoutModal" class="modal-overlay hidden">
+      <div class="modal-content">
+        <div class="modal-icon warning-icon">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i>
+        </div>
+        <h2>خروج از حساب</h2>
+        <p>آیا مطمئن هستید که می‌خواهید از حساب کاربری خود خارج شوید؟</p>
+        <div class="modal-actions">
+          <button id="confirmLogoutBtn" class="btn-confirm-logout">
+            بله، خارج شو
+          </button>
+          <button id="cancelLogoutBtn" class="btn-cancel-logout">انصراف</button>
+        </div>
+      </div>
+    </div>
     <!-- اسکریپت‌ها -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script type="module" src="./js/app.js"></script>

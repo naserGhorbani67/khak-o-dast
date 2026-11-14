@@ -28,6 +28,17 @@ const toEmptyInputsResetPassword = (password, confirm) => {
   password.value = "";
   confirm.value = "";
 };
+const toEmptyInputscheckoutShoppingCart = (
+  fullName,
+  phone,
+  address,
+  postalCode,
+) => {
+  fullName.value = "";
+  phone.value = "";
+  address.value = "";
+  postalCode.value = "";
+};
 const handleModalConfirm = (modalScreen, modalConfirmBtn) => {
   modalConfirmBtn.addEventListener("click", () => {
     const redirectUrl = modalConfirmBtn.getAttribute("data-redirect");
@@ -48,4 +59,5 @@ export {
   handleModalConfirm,
   toEmptyInputsForgotPassword,
   toEmptyInputsResetPassword,
+  toEmptyInputscheckoutShoppingCart,
 };

@@ -188,3 +188,5 @@ const hideDeleteModal = () => {
 document.addEventListener("DOMContentLoaded", renderShoppingCart);
 confirmDeleteBtn.addEventListener("click", deleteShoppingCart);
 cancelDeleteBtn.addEventListener("click", hideDeleteModal);
+//قرار دادن تابع در window سراسری برای استفاده در app.js برای آبدیت محصولات زمانی که کاربر محصولات رو در تب دیگر تغییرم میدهد.
+window.renderShoppingCart = renderShoppingCart;

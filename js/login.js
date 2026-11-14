@@ -59,7 +59,8 @@ const loginUser = async (event) => {
     if (error) throw error;
     modalScreen.classList.remove("hidden");
     iconModalScreen.setAttribute("src", "./imges/success.png");
-    modalText.innerHTML = "خوش آمدید! در حال انتقال به صفحه اصلی";
+    modalText.innerHTML =
+      "خوش آمدید! برای انتقال به صفحه اصلی دکمه تایید را بزنید";
     // redirect to home
     modalBtn.setAttribute("data-redirect", "index.html");
     toEmptyInputsLogin(emailInput, passwordInput);

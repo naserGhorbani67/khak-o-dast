@@ -294,7 +294,7 @@
 }
 
 /* کارت سفید مودال */
-.modal-content {
+.modal-content.for-auth {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;

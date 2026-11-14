@@ -157,8 +157,8 @@ document.addEventListener("click", (e) => {
   if (e.target.closest(".add-to-cart-btn")) {
     const btn = e.target.closest(".add-to-cart-btn");
     const productId = btn.getAttribute("data-id"); // گرفتن آیدی از دکمه
-
-    addToCart(productId, 1); // فراخوانی تابع با تعداد ۱
+    const productPrice = btn.getAttribute("data-price");
+    addToCart(productId, productPrice, 1); // فراخوانی تابع با تعداد ۱
     updateCartBadge();
 
     // تغییر موقت متن دکمه برای بازخورد به کاربر
@@ -204,10 +204,10 @@ function render() {
         <div class="product-name">${p.name}</div>
         <div class="product-meta">
           <span> ${p.category}</span>
-          <span class="product-price">${formatPrice(p.price)} ت</span>
+          <span class="product-price" >${formatPrice(p.price)} ت</span>
         </div>
       </a>
-      <button class="add-to-cart-btn" data-id="${p.id}">
+      <button class="add-to-cart-btn" data-id="${p.id}"data-price="${p.price}">
         <i class="fa-solid fa-cart-shopping"></i>
         افزودن به سبد
       </button>

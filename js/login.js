@@ -3,6 +3,7 @@ import {
   clientSupabase,
   toEmptyInputsLogin,
   handleModalConfirm,
+  mergeGuestCartToDatabase,
 } from "./auth.js";
 const emailInput = document.querySelector("#email");
 const passwordInput = document.querySelector("#password");
@@ -57,6 +58,8 @@ const loginUser = async (event) => {
       password: password,
     });
     if (error) throw error;
+    // صدا زدن تابع انتقال سبد خرید از مهمان به کاربر عضوشده
+    await mergeGuestCartToDatabase(data.user.id);
     modalScreen.classList.remove("hidden");
     iconModalScreen.setAttribute("src", "./imges/success.png");
     modalText.innerHTML =

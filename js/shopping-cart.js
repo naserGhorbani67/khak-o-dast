@@ -1,4 +1,8 @@
-import { getCart, saveCart, updateCartBadge } from "./shoping-cart-logic.js";
+import {
+  getCart,
+  updateCartBadge,
+  GUEST_CART_KEY,
+} from "./shoping-cart-logic.js";
 import { clientSupabase } from "./auth.js";
 
 const cartGrid = document.querySelector("#cartGrid");
@@ -18,7 +22,7 @@ let productToDeleteId = null;
 
 const renderShoppingCart = async () => {
   let cartHTML = "";
-  const cart = getCart();
+  const cart = await getCart();
   if (cart.length === 0) {
     cartGrid.classList.add("hidden");
     emptyCartState.classList.remove("hidden");
@@ -71,13 +75,14 @@ const renderShoppingCart = async () => {
     }
   }
 };
-const updateShoppingCartSummary = (productsData) => {
-  const cart = getCart();
+const updateShoppingCartSummary = async (productsData) => {
+  const cart = await getCart();
   let totalPrice = 0;
   if (cart.length === 0) {
     if (totalItemsCount) totalItemsCount.innerHTML = "0";
     if (totalPriceElem) totalPriceElem.innerHTML = "0";
     if (finalPriceElem) finalPriceElem.innerHTML = "0";
+    return;
   }
   const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
   if (totalItemsCount)
@@ -99,42 +104,84 @@ const updateShoppingCartSummary = (productsData) => {
   }
 };
 // مدریریت کلیک روی دکمه‌های داخل سبد خرید
-document.addEventListener("click", (e) => {
+document.addEventListener("click", async (e) => {
   // دکمه افزایش (+)
   if (e.target.closest(".increase-btn")) {
     const btn = e.target.closest(".increase-btn");
     const productId = btn.getAttribute("data-id");
 
-    const cart = getCart();
-    const item = cart.find((i) => i.id === productId);
-    if (item) {
-      item.quantity += 1;
-      saveCart(cart);
-      renderShoppingCart();
-      updateCartBadge();
-      updateShoppingCartSummary();
+    const {
+      data: { user },
+    } = await clientSupabase.auth.getUser();
+    if (user) {
+      // اگر لاگین است در دیتابیس آبدیت کن
+      const { data: existingItem } = await clientSupabase
+        .from("carts")
+        .select("*")
+        .eq("user_id", user.id)
+        .eq("product_id", productId)
+        .single();
+      if (existingItem) {
+        await clientSupabase
+          .from("carts")
+          .update({ quantity: existingItem.quantity + 1 })
+          .eq("id", existingItem.id);
+      }
+    } else {
+      // اگر مهمان است در لوکال استوریج آبدیت کن
+      const cart = await getCart();
+      const item = cart.find((i) => i.id === productId);
+      if (item) {
+        item.quantity += 1;
+        localStorage.setItem(GUEST_CART_KEY, JSON.stringify(cart));
+      }
     }
+    await renderShoppingCart();
+    await updateCartBadge();
   }
   // دکمه کاهش (-)
   if (e.target.closest(".decrease-btn")) {
     const btn = e.target.closest(".decrease-btn");
     const productId = btn.getAttribute("data-id");
-
-    const cart = getCart();
-    const item = cart.find((i) => i.id === productId);
-    if (item) {
-      if (item.quantity > 1) {
-        item.quantity -= 1;
-      } else {
-        // اگر تعداد یک بود و کاربر کمتر کرد محصول حذف شود
-        productToDeleteId = productId;
-        deleteModal.classList.remove("hidden");
+    const {
+      data: { user },
+    } = await clientSupabase.auth.getUser();
+    if (user) {
+      // اگر لاگین است در دیتابیس بررسی و آبدیت کن
+      const { data: existingItem } = await clientSupabase
+        .from("carts")
+        .select("*")
+        .eq("user_id", user.id)
+        .eq("product_id", productId)
+        .single();
+      if (existingItem) {
+        if (existingItem.quantity > 1) {
+          await clientSupabase
+            .from("carts")
+            .update({ quantity: existingItem.quantity - 1 })
+            .eq("id", existingItem.id);
+        } else {
+          productToDeleteId = productId;
+          deleteModal.classList.remove("hidden");
+        }
       }
-      saveCart(cart);
-      renderShoppingCart();
-      updateCartBadge();
-      updateShoppingCartSummary();
+    } else {
+      // اگر مهمان است در لوکال استوریج آبدیت کن
+      const cart = await getCart();
+      const item = cart.find((i) => i.id === productId);
+      if (item) {
+        if (item.quantity > 1) {
+          item.quantity -= 1;
+          localStorage.setItem(GUEST_CART_KEY, JSON.stringify(cart));
+        } else {
+          // اگر تعداد یک بود و کاربر کمتر کرد محصول حذف شود
+          productToDeleteId = productId;
+          deleteModal.classList.remove("hidden");
+        }
+      }
     }
+    await renderShoppingCart();
+    await updateCartBadge();
   }
   //   دکمه حذف (سطل زباله)
   if (e.target.closest(".cart-item-remove")) {
@@ -144,11 +191,10 @@ document.addEventListener("click", (e) => {
     deleteModal.classList.remove("hidden");
   }
 });
-const deleteShoppingCart = () => {
+const deleteShoppingCart = async () => {
   if (!productToDeleteId) {
     return;
   }
-  const cart = getCart();
   //   تغییر متن دکمه هنگام حذف محصول
   const orginalBtnText = confirmDeleteBtn.innerHTML;
   const orginalMessageText = messageDelete.innerHTML;
@@ -158,11 +204,25 @@ const deleteShoppingCart = () => {
   cancelDeleteBtn.disabled = true;
   cancelDeleteBtn.classList.add("disable");
 
-  const updateCart = cart.filter((i) => i.id !== productToDeleteId);
-  saveCart(updateCart);
-  renderShoppingCart();
-  updateCartBadge();
-  updateShoppingCartSummary();
+  const {
+    data: { user },
+  } = await clientSupabase.auth.getUser();
+  if (user) {
+    // حذف سبد خرید از دیتابیس
+    await clientSupabase
+      .from("carts")
+      .delete()
+      .eq("user_id", user.id)
+      .eq("product_id", productToDeleteId);
+  } else {
+    // حذف از لوکال استوریج
+    const cart = await getCart();
+    const updateCart = cart.filter((i) => i.id !== productToDeleteId);
+    localStorage.setItem(GUEST_CART_KEY, JSON.stringify(updateCart));
+  }
+  await renderShoppingCart();
+  await updateCartBadge();
+
   //   نمایش حذف محصول
   setTimeout(() => {
     messageDelete.innerHTML = "محصول با موفقیت حذف شد";

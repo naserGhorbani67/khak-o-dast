@@ -1,6 +1,6 @@
 import { clientSupabase } from "./auth.js";
 import { getCart } from "./shoping-cart-logic.js";
-import { updateCartBadge, CART_STORAGE_KEY } from "./shoping-cart-logic.js";
+import { updateCartBadge, GUEST_CART_KEY } from "./shoping-cart-logic.js";
 
 const navToggle = document.getElementById("navToggle");
 const navLinks = document.querySelector(".nav-links");
@@ -151,9 +151,9 @@ inputEmail?.addEventListener("keyup", showWarningEmail);
 textEreaMessage?.addEventListener("keyup", showWarningMessage);
 formBtn?.addEventListener("click", submitMessage);
 // login and logout user
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
   checkUserAuthStatus();
-  updateCartBadge(); //به روز رسانی عدد آیکون سبد خرید در بالای صفحه
+  await updateCartBadge(); //به روز رسانی عدد آیکون سبد خرید در بالای صفحه
 
   if (logoutBtn && logoutModal) {
     logoutBtn.addEventListener("click", () => {
@@ -172,22 +172,20 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 // ==========================================
-// همگام‌سازی سبد خرید بین تب‌های مختلف مرورگر
+// همگام‌سازی سبد خرید بین تب‌های مختلف مرورگر در حالت مهمان
 // ==========================================
-window.addEventListener("storage", (event) => {
+window.addEventListener("storage", async (event) => {
   // چک می‌کنیم آیا کلیدی که تغییر کرده، کلید سبد خرید ما است یا نه
-  if (event.key === CART_STORAGE_KEY) {
+  if (event.key === GUEST_CART_KEY) {
     // ۱. آیکون هدر رو در هر صفحه‌ای که هستیم آپدیت کن
     if (typeof updateCartBadge === "function") {
-      updateCartBadge();
+      await updateCartBadge();
     }
-
-    // 👇 ۲. بررسی می‌کنیم در کدام صفحه هستیم 👇
 
     // حالت اول: اگر در صفحه سبد خرید هستیم (المان cartItemsSection وجود دارد)
     if (document.getElementById("cartItemsSection")) {
       if (typeof window.renderShoppingCart === "function") {
-        window.renderShoppingCart();
+        await window.renderShoppingCart();
       }
     }
     // حالت دوم: اگر در صفحه سبد خرید نبودیم، ببین در صفحه تسویه حساب هستیم یا نه
@@ -197,4 +195,54 @@ window.addEventListener("storage", (event) => {
       }
     }
   }
+});
+// ==========================================
+// همگام‌سازی سبد خرید بین تب‌های مرورگر در حالت لاگین (Realtime Supabase)
+// ==========================================
+const setupRealtimeCart = async () => {
+  const {
+    data: { user },
+  } = await clientSupabase.auth.getUser();
+
+  // فقط اگر کاربر لاگین باشد، به تغییرات جدول carts گوش می‌دهیم
+  if (user) {
+    clientSupabase
+      .channel("cart-changes-channel")
+      .on(
+        "postgres_changes",
+        {
+          event: "*",
+          schema: "public",
+          table: "carts",
+          filter: `user_id=eq.${user.id}`, // فقط تغییرات سبد خرید همین کاربر
+        },
+        async (payload) => {
+          console.log("تغییری در سبد خرید دیتابیس رخ داد:", payload);
+
+          // ۱. آپدیت کردن عدد بج هدر
+          if (typeof updateCartBadge === "function") {
+            await updateCartBadge();
+          }
+
+          // ۲. اگر در صفحه سبد خرید هستیم، لیست را دوباره رندر کن
+          if (document.getElementById("cartItemsSection")) {
+            if (typeof window.renderShoppingCart === "function") {
+              await window.renderShoppingCart();
+            }
+          }
+          // ۳. اگر در صفحه تسویه حساب (Checkout) هستیم
+          else if (document.getElementById("checkoutItemsList")) {
+            if (typeof window.renderCheckoutSummary === "function") {
+              window.renderCheckoutSummary();
+            }
+          }
+        },
+      )
+      .subscribe();
+  }
+};
+
+// اجرای تابع هنگام لود شدن صفحه در app.js
+document.addEventListener("DOMContentLoaded", () => {
+  setupRealtimeCart();
 });

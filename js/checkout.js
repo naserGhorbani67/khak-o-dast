@@ -6,7 +6,7 @@ import {
   toEmptyInputscheckoutShoppingCart,
 } from "./auth.js";
 import { clientSupabase } from "./auth.js";
-import { getCart, CART_STORAGE_KEY } from "./shoping-cart-logic.js";
+import { getCart, GUEST_CART_KEY } from "./shoping-cart-logic.js";
 // checkout form elems
 const fullNameInput = document.querySelector("#fullName");
 const phoneInput = document.querySelector("#phone");
@@ -57,7 +57,7 @@ const validCheckoutForm = () => {
   return isFormValid;
 };
 const renderCheckoutSummary = async () => {
-  const cart = getCart();
+  const cart = await getCart();
   if (cart.length === 0) {
     window.location.href = "shopping-cart.html";
     return;
@@ -146,7 +146,7 @@ const placeOrder = async (event) => {
     const address = addressInput.value.trim();
     const totalPrice = Number(checkoutFinalPrice.dataset.price);
 
-    const cart = getCart();
+    const cart = await getCart();
     if (cart.length === 0) return;
 
     // ثبت در جدول orders
@@ -183,7 +183,7 @@ const placeOrder = async (event) => {
 
     // موفقیت
     isLeavingPage = true;
-    localStorage.removeItem(CART_STORAGE_KEY);
+    localStorage.removeItem(GUEST_CART_KEY);
     statusModal.classList.remove("hidden");
     statusModalIcon.src = "./imges/success.png";
     statusModalText.innerHTML =

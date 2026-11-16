@@ -152,14 +152,13 @@ const fetchProducts = async () => {
   }
 };
 // مدیریت کلیک روی دکمه‌های افزودن به سبد در صفحه محصولات
-document.addEventListener("click", (e) => {
+document.addEventListener("click", async (e) => {
   // چک می‌کنیم آیا عنصری که کلیک شده، دکمه افزودن به سبد است یا نه
   if (e.target.closest(".add-to-cart-btn")) {
     const btn = e.target.closest(".add-to-cart-btn");
     const productId = btn.getAttribute("data-id"); // گرفتن آیدی از دکمه
-    const productPrice = btn.getAttribute("data-price");
-    addToCart(productId, productPrice, 1); // فراخوانی تابع با تعداد ۱
-    updateCartBadge();
+    await addToCart(productId, 1); // فراخوانی تابع با تعداد ۱
+    await updateCartBadge();
 
     // تغییر موقت متن دکمه برای بازخورد به کاربر
     const originalText = btn.innerHTML;

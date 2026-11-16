@@ -72,9 +72,9 @@ const initProductDetailPage = async () => {
     });
 
     // ۴. عملکرد دکمه افزودن به سبد خرید
-    addToCartBtn?.addEventListener("click", () => {
-      addToCart(product.id, product.price, quantity);
-      updateCartBadge();
+    addToCartBtn?.addEventListener("click", async () => {
+      await addToCart(product.id, quantity);
+      await updateCartBadge();
 
       // بازخورد بصری به کاربر
       const originalText = addToCartBtn.innerHTML;

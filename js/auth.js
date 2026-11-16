@@ -61,3 +61,54 @@ export {
   toEmptyInputsResetPassword,
   toEmptyInputscheckoutShoppingCart,
 };
+//تابع انتقال سبد خرید مهمان به دیتا بیس
+export const mergeGuestCartToDatabase = async (userId) => {
+  const guestCartJSON = localStorage.getItem("khak_o_dast_cart_guest");
+  if (!guestCartJSON) return; // اگر سبد خرید مهمان خالی است کاری نکن
+  try {
+    const guestCart = JSON.parse(guestCartJSON);
+    if (guestCart.length === 0) return;
+    // انتقال تک تک محصولات به دیتابیس
+    for (const item of guestCart) {
+      const productId = item.id;
+      const guestQuantity = item.quantity;
+      // چک کنیم که این محصول از قبل توی دیتابیس است یا نه؟
+      const { data: existingItems, error: findError } = await clientSupabase
+        .from("carts")
+        .select("*")
+        .eq("user_id", userId)
+        .eq("product_id", productId);
+
+      if (findError) {
+        console.error("خطا در بررسی محصول در دیتابیس", findError);
+        continue; //برو سراغ محصول بعدی
+      }
+      const existingItem =
+        existingItems && existingItems.length > 0 ? existingItems[0] : null;
+      if (existingItem) {
+        // اگر محصول از قبل در دیتابیس وجود داشت تعداد را جمع میزنیم
+        const newQuantity = existingItem.quantity + guestQuantity;
+        const { error: updateError } = await clientSupabase
+          .from("carts")
+          .update({ quantity: newQuantity })
+          .eq("id", existingItem.id);
+        if (updateError)
+          console.error("خطا در آپدیت تعداد محصولات", updateError);
+      } else {
+        // اگر وجود نداشت ردیف جدید میسازیم
+        const { error: insertError } = await clientSupabase
+          .from("carts")
+          .insert([
+            { user_id: userId, product_id: productId, quantity: guestQuantity },
+          ]);
+        if (insertError)
+          console.error("خطا در اضافه‌کردن محصول جدید", insertError);
+      }
+    }
+    // بعد از موفقیت سبد مهمان را پاک میکنیم
+    localStorage.removeItem("khak_o_dast_cart_guest");
+    console.log("سبد خرید مهمان با موفقیت منتقل شد");
+  } catch (error) {
+    console.error("خطا در پردازش  سبد خرید مهمان ", error);
+  }
+};

@@ -1,0 +1,264 @@
+/* ==========================================
+   استایل‌های صفحه جزئیات سفارش
+   ========================================== */
+
+.order-details-wrapper {
+  padding-bottom: 50px;
+  margin-top: 100px;
+}
+
+/* لودینگ */
+.loading-state {
+  text-align: center;
+  padding: 50px;
+  color: var(--clay);
+  font-size: 18px;
+}
+.loading-state i {
+  font-size: 40px;
+  margin-bottom: 15px;
+}
+.hidden {
+  display: none !important;
+}
+
+/* هدر صفحه */
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid var(--line);
+}
+
+.page-header h1 {
+  margin: 0;
+  color: var(--ink);
+  font-size: 22px;
+}
+
+.back-btn {
+  color: var(--clay);
+  text-decoration: none;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: color 0.3s;
+}
+
+.back-btn:hover {
+  color: var(--clay-dark);
+}
+
+/* بخش ۱: اطلاعات کلی */
+.order-info-card {
+  background-color: var(--sand-light);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.info-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+}
+
+.info-item .label {
+  color: var(--ink-soft);
+}
+
+.info-item .value {
+  font-weight: bold;
+  color: var(--ink);
+}
+
+/* استایل بج‌های وضعیت سفارش (Status Badges) */
+
+.status-badge {
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-weight: bold;
+  display: inline-block;
+}
+
+/* در حال پردازش */
+.status-pending {
+  background-color: rgba(178, 74, 43, 0.1); /* محو شده رنگ clay */
+  color: var(--clay);
+}
+
+/* پرداخت شده */
+.status-paid {
+  background-color: rgba(107, 90, 72, 0.1); /* محو شده رنگ ink-soft */
+  color: var(--ink-soft);
+}
+
+/* ارسال شده */
+.status-shipped {
+  background-color: var(--sand);
+  color: var(--clay-dark);
+}
+/* بخش ۲: محصولات */
+.order-items-section {
+  border-top: none;
+  margin-bottom: 30px;
+  padding: 0;
+}
+
+.order-items-section h2,
+.order-shipping-section h2 {
+  font-size: 16px;
+  color: var(--ink);
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.order-items-section h2 i,
+.order-shipping-section h2 i {
+  color: var(--clay);
+}
+
+.items-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.order-item-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 10px 15px;
+  gap: 15px;
+}
+
+.item-image {
+  width: 60px;
+  height: 60px;
+  border-radius: 8px;
+  object-fit: cover;
+  border: 1px solid var(--line);
+}
+
+.item-details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.item-name {
+  font-weight: bold;
+  color: var(--ink);
+  font-size: 14px;
+}
+
+.item-meta {
+  font-size: 12px;
+  color: var(--ink-soft);
+}
+
+.item-total-price {
+  font-weight: bold;
+  color: var(--clay-dark);
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+/* بخش ۳: اطلاعات ارسال و مالی */
+.order-shipping-section {
+  border-top: none;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.shipping-info,
+.payment-info {
+  background-color: var(--sand-light);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.shipping-info ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.shipping-info li {
+  font-size: 13px;
+  color: var(--ink-soft);
+  line-height: 1.5;
+}
+
+.shipping-info strong {
+  color: var(--ink);
+}
+
+.total-price-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+  padding-top: 15px;
+  border-top: 1px dashed var(--line);
+  font-size: 15px;
+}
+
+.total-price-row strong {
+  color: var(--clay-dark);
+  font-size: 18px;
+}
+
+/* ==========================================
+   ریسپانسیو (موبایل و تبلت)
+   ========================================== */
+@media (max-width: 768px) {
+  .order-info-card {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .order-shipping-section {
+    grid-template-columns: 1fr;
+  }
+
+  .page-header h1 {
+    font-size: 1.1rem;
+  }
+
+  .order-item-row {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .item-image {
+    width: 80px;
+    height: 80px;
+  }
+
+  .item-details {
+    align-items: center;
+  }
+}

@@ -135,9 +135,13 @@
     </div>
     <main class="cart-container">
       <h1 class="cart-page-title">سبد خرید شما</h1>
-
+      <!-- این div برای لودینگ اضافه میشه -->
+      <div id="cartLoadingState" class="loading-state hidden">
+        <i class="fa-solid fa-spinner fa-spin"></i>
+        <p>در حال دریافت سبد خرید...</p>
+      </div>
       <!-- بخش اصلی (شبکه دو ستونی) -->
-      <div class="cart-grid" id="cartGrid">
+      <div class="cart-grid hidden" id="cartGrid">
         <!-- ستون سمت راست: لیست محصولات -->
         <div class="cart-items-section" id="cartItemsSection">
           <!-- کارت‌های محصول با جاوااسکریپت اینجا تزریق می‌شوند -->

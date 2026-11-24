@@ -58,7 +58,8 @@ const validCheckoutForm = () => {
 };
 const renderCheckoutSummary = async () => {
   const cart = await getCart();
-  if (cart.length === 0) {
+  // وقتی محصول را ثبت نهایی میکنیم باعث میشه که سبد خالی بشه و این کد اجرا بشه و اشتباهی به صفحه سبد خرید بره که برای جلوگیری از این کار شرط زیر رو مینویسم
+  if (cart.length === 0 && !isSubmitting) {
     window.location.href = "shopping-cart.html";
     return;
   }
@@ -144,18 +145,38 @@ const placeOrder = async (event) => {
     const phone = phoneInput.value.trim();
     const postalCode = postalCodeInput.value.trim();
     const address = addressInput.value.trim();
-    const totalPrice = Number(checkoutFinalPrice.dataset.price);
 
     const cart = await getCart();
     if (cart.length === 0) return;
 
+    // خواندن قیمت از دیتابیس
+    const productIds = cart.map((item) => item.id);
+    const { data: productsData, error: productsError } = await clientSupabase
+      .from("products")
+      .select("id, price")
+      .in("id", productIds);
+    if (productsError) throw productsError;
+
+    let calculatedTotalPrice = 0;
+    // آماده سازی آرایه orderitems با قیمت‌های معتبر
+    const orderItems = cart.map((cartItem) => {
+      const product = productsData.find((p) => p.id === cartItem.id);
+      const itemPrice = product ? product.price : 0;
+      calculatedTotalPrice += itemPrice * cartItem.quantity;
+      return {
+        order_id: null,
+        product_id: cartItem.id,
+        quantity: cartItem.quantity,
+        price: itemPrice,
+      };
+    });
     // ثبت در جدول orders
     const { data: orderData, error: orderError } = await clientSupabase
       .from("orders")
       .insert([
         {
           user_id: user.id,
-          total_price: totalPrice, //اصولی و امنیتی این است که از دیتا بیس گرفته شود
+          total_price: calculatedTotalPrice,
           status: "pending",
           recipient_name: recipientName,
           phone,
@@ -167,19 +188,20 @@ const placeOrder = async (event) => {
       .single();
     if (orderError) throw orderError;
     orderId = orderData.id;
-
-    // ثبت در جدول order_items
-    const orderItems = cart.map((item) => ({
+    // اضافه کردن order_id به آیتم‌ها
+    const finalOrderItems = orderItems.map((item) => ({
+      ...item,
       order_id: orderId,
-      product_id: item.id,
-      quantity: item.quantity,
-      price: item.price,
     }));
 
+    // ثبت در جدول order_items
     const { error: itemsError } = await clientSupabase
       .from("order_items")
-      .insert(orderItems);
+      .insert(finalOrderItems);
+
     if (itemsError) throw itemsError;
+
+    await clientSupabase.from("carts").delete().eq("user_id", user.id);
 
     // موفقیت
     isLeavingPage = true;

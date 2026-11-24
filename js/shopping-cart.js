@@ -8,6 +8,8 @@ import { clientSupabase } from "./auth.js";
 const cartGrid = document.querySelector("#cartGrid");
 const emptyCartState = document.querySelector("#emptyCartState");
 const cartItemsSection = document.querySelector("#cartItemsSection");
+// loading
+const cartLoadingState = document.querySelector("#cartLoadingState");
 // shopping cart summary
 const totalItemsCount = document.querySelector("#totalItemsCount");
 const totalPriceElem = document.querySelector("#totalPrice");
@@ -22,13 +24,12 @@ let productToDeleteId = null;
 
 const renderShoppingCart = async () => {
   let cartHTML = "";
+
   const cart = await getCart();
   if (cart.length === 0) {
-    cartGrid.classList.add("hidden");
+    if (cartGrid) cartGrid.classList.add("hidden");
     emptyCartState.classList.remove("hidden");
   } else {
-    cartGrid.classList.remove("hidden");
-    emptyCartState.classList.add("hidden");
     const productIds = cart.map((item) => item.id);
     try {
       const { data: productsData, error } = await clientSupabase
@@ -70,6 +71,7 @@ const renderShoppingCart = async () => {
       });
       cartItemsSection.innerHTML = cartHTML;
       updateShoppingCartSummary(productsData);
+      if (cartGrid) cartGrid.classList.remove("hidden");
     } catch (error) {
       console.error("خطا در دریافت اطلاعات محصولات سبد", error);
     }
@@ -192,60 +194,109 @@ document.addEventListener("click", async (e) => {
   }
 });
 const deleteShoppingCart = async () => {
-  if (!productToDeleteId) {
-    return;
-  }
-  //   تغییر متن دکمه هنگام حذف محصول
+  if (!productToDeleteId) return;
+
+  // ۱. ذخیره مقادیر اولیه (قبل از هر تغییر ظاهری)
   const orginalBtnText = confirmDeleteBtn.innerHTML;
   const orginalMessageText = messageDelete.innerHTML;
+
+  // ۲. آماده‌سازی مودال (ریست کردن رنگ‌ها و متن‌های قبلی + قفل کردن دکمه‌ها)
+  messageDelete.style.color = "";
+  messageDelete.innerHTML = orginalMessageText;
   confirmDeleteBtn.innerHTML = "در حال حذف ...";
   confirmDeleteBtn.disabled = true;
   confirmDeleteBtn.classList.add("disable");
+  confirmDeleteBtn.style.display = "";
+  cancelDeleteBtn.style.display = "";
   cancelDeleteBtn.disabled = true;
   cancelDeleteBtn.classList.add("disable");
 
-  const {
-    data: { user },
-  } = await clientSupabase.auth.getUser();
-  if (user) {
-    // حذف سبد خرید از دیتابیس
-    await clientSupabase
-      .from("carts")
-      .delete()
-      .eq("user_id", user.id)
-      .eq("product_id", productToDeleteId);
-  } else {
-    // حذف از لوکال استوریج
-    const cart = await getCart();
-    const updateCart = cart.filter((i) => i.id !== productToDeleteId);
-    localStorage.setItem(GUEST_CART_KEY, JSON.stringify(updateCart));
-  }
-  await renderShoppingCart();
-  await updateCartBadge();
+  let isSuccess = false; // پرچم برای تشخیص موفقیت
 
-  //   نمایش حذف محصول
-  setTimeout(() => {
+  try {
+    const {
+      data: { user },
+    } = await clientSupabase.auth.getUser();
+
+    if (user) {
+      const { error: deleteError } = await clientSupabase
+        .from("carts")
+        .delete()
+        .eq("user_id", user.id)
+        .eq("product_id", productToDeleteId);
+
+      if (deleteError) throw deleteError; // اگر دیتابیس خطا داد، بندازش به catch
+    } else {
+      // حذف از لوکال استوریج
+      const cart = await getCart();
+      const updateCart = cart.filter((i) => i.id !== productToDeleteId);
+      localStorage.setItem(GUEST_CART_KEY, JSON.stringify(updateCart));
+    }
+
+    // ۳. اگر به اینجا رسیدیم یعنی حذف موفقیت‌آمیز بوده
+    isSuccess = true;
+    await renderShoppingCart();
+    await updateCartBadge();
+    // نمایش پیام موفقیت
     messageDelete.innerHTML = "محصول با موفقیت حذف شد";
-    confirmDeleteBtn.innerHTML = orginalBtnText;
+    messageDelete.style.color = "var(--glaze)";
+
+    // مخفی کردن دکمه‌ها در حالت موفقیت
     confirmDeleteBtn.style.display = "none";
     cancelDeleteBtn.style.display = "none";
-    setTimeout(() => {
-      hideDeleteModal();
-      confirmDeleteBtn.style.display = ""; // اگه block بشه ممکنه بهم بریزه
-      cancelDeleteBtn.style.display = "";
-      confirmDeleteBtn.disabled = false;
-      confirmDeleteBtn.classList.remove("disable");
-      cancelDeleteBtn.disabled = false;
-      cancelDeleteBtn.classList.remove("disable");
-      messageDelete.innerHTML = orginalMessageText;
-    }, 2000);
-  }, 2000);
+  } catch (error) {
+    console.error("خطا در حذف محصول:", error);
+
+    // ۴. اگر خطایی رخ داد
+    messageDelete.innerHTML =
+      "خطایی در حذف محصول رخ داد. لطفا دوباره تلاش کنید.";
+    messageDelete.style.color = "var(--clay)";
+
+    confirmDeleteBtn.innerHTML = "تلاش مجدد";
+    confirmDeleteBtn.disabled = false;
+    confirmDeleteBtn.classList.remove("disable");
+    cancelDeleteBtn.disabled = false;
+    cancelDeleteBtn.classList.remove("disable");
+
+    // در حالت خطا، مودال باز می‌مونه
+  } finally {
+    // فقط اگر موفقیت‌آمیز بود، بعد از ۱ ثانیه مودال رو می‌بندیم
+    if (isSuccess) {
+      setTimeout(() => {
+        hideDeleteModal();
+
+        // ریست نهایی دکمه‌ها برای استفاده‌های بعدی
+        confirmDeleteBtn.style.display = "";
+        cancelDeleteBtn.style.display = "";
+        confirmDeleteBtn.innerHTML = orginalBtnText;
+        confirmDeleteBtn.disabled = false;
+        confirmDeleteBtn.classList.remove("disable");
+        cancelDeleteBtn.disabled = false;
+        cancelDeleteBtn.classList.remove("disable");
+        messageDelete.innerHTML = orginalMessageText;
+      }, 1000);
+    }
+  }
 };
 const hideDeleteModal = () => {
   deleteModal.classList.add("hidden");
   productToDeleteId = null;
+  messageDelete.style.color = ""; // برگرداندن رنگ به حالت اول
+  messageDelete.innerHTML = "آیا از حذف این محصول مطمئن هستید؟";
+  confirmDeleteBtn.innerHTML = "بله، حذف کن";
 };
-document.addEventListener("DOMContentLoaded", renderShoppingCart);
+
+document.addEventListener("DOMContentLoaded", async () => {
+  // ۱. اول لودینگ رو نشون بده
+  if (cartLoadingState) cartLoadingState.classList.remove("hidden");
+  if (cartGrid) cartGrid.classList.add("hidden");
+  if (emptyCartState) emptyCartState.classList.add("hidden");
+
+  // ۲. سبد خرید رو رندر کن
+  await renderShoppingCart();
+
+  if (cartLoadingState) cartLoadingState.classList.add("hidden");
+});
 confirmDeleteBtn.addEventListener("click", deleteShoppingCart);
 cancelDeleteBtn.addEventListener("click", hideDeleteModal);
 //قرار دادن تابع در window سراسری برای استفاده در app.js برای آبدیت محصولات زمانی که کاربر محصولات رو در تب دیگر تغییرم میدهد.

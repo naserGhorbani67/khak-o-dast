@@ -20,7 +20,23 @@
   margin-bottom: 30px;
   font-weight: 800;
 }
+/* استایل لودینگ */
+.loading-state {
+  text-align: center;
+  padding: 50px;
+  color: var(--clay);
+  font-size: 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px; /* برای اینکه صفحه نلرزه */
+}
 
+.loading-state i {
+  font-size: 40px;
+  margin-bottom: 15px;
+}
 /* --- شبکه اصلی (دو ستونی) --- */
 .cart-grid {
   display: grid;

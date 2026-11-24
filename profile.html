@@ -152,9 +152,7 @@
               <strong>نام و نام خانوادگی:</strong> <span id="card-name">-</span>
             </p>
             <p><strong>ایمیل:</strong> <span id="card-email">-</span></p>
-            <p>
-              <strong>شماره تماس:</strong> <span id="card-phone">ثبت نشده</span>
-            </p>
+            <p><strong>شماره تماس:</strong> <span id="card-phone"> </span></p>
           </div>
         </div>
 
@@ -164,9 +162,12 @@
             <i class="fa-solid fa-box-open"></i>
             <h2>سفارش‌های من</h2>
           </div>
-          <div class="card-body empty-state">
-            <i class="fa-solid fa-box"></i>
-            <p>شما هنوز هیچ سفارشی ثبت نکرده‌اید.</p>
+          <div class="card-body orders-list" id="orders-container">
+            <div class="empty-state" id="empty-orders-state">
+              <i class="fa-solid fa-box"></i>
+              <p>در حال بارگذاری ...</p>
+            </div>
+            <!--  orders list load from js -->
           </div>
         </div>
 
@@ -176,8 +177,12 @@
             <i class="fa-solid fa-location-dot"></i>
             <h2>آدرس‌های من</h2>
           </div>
-          <div class="card-body empty-state">
-            <p>هیچ آدرسی ثبت نشده است.</p>
+          <div class="card-body address-list" id="address-container">
+            <div class="empty-state" id="empty-address-state">
+              <i class="fa-solid fa-location-dot"></i>
+              <p>در حال بارگذاری ...</p>
+            </div>
+            <!-- address lists load from js -->
           </div>
         </div>
       </section>
